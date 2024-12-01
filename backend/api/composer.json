@@ -1,0 +1,25 @@
+{
+  "name": "ramon/api",
+  "description": "api-projeto-integrador",
+  "autoload": {
+    "psr-4": {
+      "": "src/"
+    }
+  },
+  "scripts": {
+    "dump": "composer dump-autoload"
+  },
+  "authors": [
+    {
+      "name": "Ramonsouzadasilva",
+      "email": "ramon.souzadasilva2@gmail.com"
+    }
+  ],
+  "require": {
+    "phputil/router": "^0.3.3"
+  },
+  "require-dev": {
+    "phpstan/phpstan": "^2.0",
+    "kahlan/kahlan": "^5.2"
+  }
+}
