@@ -3,11 +3,11 @@
 
 class Mesa
 {
-    public $id;
-    public $numeroDaMesa;
-    public $disponivel;
+    public int $id;
+    public int $numeroDaMesa;
+    public bool $disponivel;
 
-    public function __construct($id, $numeroDaMesa, $disponivel)
+    public function __construct(int $id, int $numeroDaMesa, bool $disponivel)
     {
         $this->id = $id;
         $this->numeroDaMesa = $numeroDaMesa;

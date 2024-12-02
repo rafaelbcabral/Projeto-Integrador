@@ -12,36 +12,37 @@ class ReservaRepository
         $this->pdo = $pdo;
     }
 
-    public function verificarDisponibilidade($mesa, $data, $horaInicial, $horaTermino)
+    public function verificarDisponibilidade(Reserva $reserva)
     {
-        // Preparamos a consulta para verificar a disponibilidade da mesa
+        // Prepara a consulta para verificar a disponibilidade da mesa no horário solicitado
         $stmt = $this->pdo->prepare("
-            SELECT * FROM reserva
+            SELECT 1 FROM reserva
             WHERE mesa = :mesa
+            AND data_reservada = :data
             AND (
-                (data_reservada = :data AND inicio_reserva BETWEEN :inicio AND :fim)
-                OR
-                (data_reservada = :data AND fim_reserva BETWEEN :inicio AND :fim)
+                (inicio_reserva < :fim AND fim_reserva > :inicio)
             )
         ");
 
-        // Executamos a consulta passando os parâmetros nomeados
+        // Executa a consulta passando os parâmetros nomeados
         $stmt->execute([
-            ':mesa' => $mesa,
-            ':data' => $data,
-            ':inicio' => $horaInicial,
-            ':fim' => $horaTermino
+            ':mesa' => $reserva->mesa,
+            ':data' => $reserva->data, // A data sem o horário
+            ':inicio' => $reserva->horaInicial,
+            ':fim' => $reserva->horaTermino
         ]);
 
-        // Verificamos se existem registros que indicam conflito de reserva
-        return $stmt->rowCount() > 0;
-    }
+        $resultados = $stmt->fetchAll();
 
+        // Se houver algum resultado, significa que a mesa já está reservada para o horário solicitado
+        return count($resultados) > 0;
+    }
 
     public function salvarReserva(Reserva $reserva)
     {
         $stmt = $this->pdo->prepare("INSERT INTO reserva (nome_cliente, data_reservada, inicio_reserva, 
         fim_reserva, mesa, funcionario) VALUES (?, ?, ?, ?, ?, ?)");
+
         $stmt->execute([
             $reserva->nomeCliente,
             $reserva->data,
@@ -60,7 +61,6 @@ class ReservaRepository
             $ps->execute(['id' => $id]);
         } catch (Exception $e) {
             // Log any exception during execution
-            error_log("Error in cancelarReserva: " . $e->getMessage());
             throw $e;  // Re-throw exception to be handled by controller
         }
     }
@@ -76,7 +76,12 @@ class ReservaRepository
 
     public function listarReservas()
     {
-        $stmt = $this->pdo->query("SELECT * FROM reserva ORDER BY inicio_reserva ASC");
+        // $stmt = $this->pdo->query("SELECT * FROM reserva");
+        $stmt = $this->pdo->query("
+        SELECT reserva.id, reserva.nome_cliente, reserva.data_reservada, reserva.inicio_reserva, reserva.fim_reserva, reserva.mesa, reserva.status, funcionario.nome AS nome_funcionario
+        FROM reserva
+        JOIN funcionario ON reserva.funcionario = funcionario.id
+    ");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

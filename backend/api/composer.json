@@ -3,11 +3,17 @@
   "description": "api-projeto-integrador",
   "autoload": {
     "psr-4": {
-      "": "src/"
+      "": [
+        "src/",
+        "src/reserva",
+        "src/mesa",
+        "src/infra"
+      ]
     }
   },
   "scripts": {
-    "dump": "composer dump-autoload"
+    "dump": "composer dump-autoload",
+    "test": "kahlan"
   },
   "authors": [
     {
