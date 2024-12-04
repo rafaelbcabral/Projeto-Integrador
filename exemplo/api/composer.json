@@ -1,0 +1,13 @@
+{
+    "name": "rafae/api",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "": "src/"
+        }
+    },
+    "require": {
+        "phputil/router": "^0.3.3",
+        "phputil/cors": "^0.5.1"
+    }
+}
