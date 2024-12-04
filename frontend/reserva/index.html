@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Restaurant Reservation</title>
+    <link rel="stylesheet" href="index.css" />
+    <script src="index.js" type="module" defer></script>
+    <script src="teste.js" type="module" defer></script>
+  </head>
+  <body>
+    <main>
+      <div class="container">
+        <h1>Restaurant Reservation</h1>
+        <div class="app-container">
+          <div class="reservation-form">
+            <h2>Make a Reservation</h2>
+            <form id="reservationForm">
+              <label for="date">Date:</label>
+              <input type="date" id="date" required />
+
+              <label for="time">Time:</label>
+              <select id="time" required>
+                <option value="">Escolha a hora da Reserva</option>
+                <option value="18:00">10:00</option>
+                <option value="18:30">12:00</option>
+                <option value="19:00">14:00</option>
+                <option value="19:30">16:00</option>
+                <option value="20:00">18:00</option>
+                <option value="20:30">20:00</option>
+              </select>
+
+              <label for="funcionario">Funcionario</label>
+              <select id="funcionario" required>
+                <option value="">Selecione o Funcionario</option>
+                <!-- Funcionarios serão carregados aqui -->
+              </select>
+
+              <label for="mesa">Mesas</label>
+              <select id="mesa" required>
+                <option value="">Selecione a mesa</option>
+                <!-- Mesas serão carregadas aqui -->
+              </select>
+
+              <label for="name">Nome:</label>
+              <input type="text" id="name" required />
+
+              <button type="submit">Fazer Reserva</button>
+            </form>
+          </div>
+          <div class="reservations-list">
+            <h2>Sua Reserva</h2>
+            <ul id="reservationsList"></ul>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
