@@ -1,0 +1,100 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "bb17e1e57b066356a90c4e28f4836087",
+    "packages": [
+        {
+            "name": "phputil/cors",
+            "version": "v0.5.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thiagodp/cors.git",
+                "reference": "bc4299746e6412f06f4f7ea1e163df0bb32c7d75"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thiagodp/cors/zipball/bc4299746e6412f06f4f7ea1e163df0bb32c7d75",
+                "reference": "bc4299746e6412f06f4f7ea1e163df0bb32c7d75",
+                "shasum": ""
+            },
+            "require-dev": {
+                "kahlan/kahlan": "^5.2",
+                "phpstan/phpstan": "^1.9",
+                "phputil/router": "^0.3.0",
+                "symfony/http-client": "^5.4"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/cors.php"
+                ],
+                "psr-4": {
+                    "phputil\\cors\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "CORS middleware for phputil/router",
+            "support": {
+                "issues": "https://github.com/thiagodp/cors/issues",
+                "source": "https://github.com/thiagodp/cors/tree/v0.5.1"
+            },
+            "time": "2024-11-09T21:29:31+00:00"
+        },
+        {
+            "name": "phputil/router",
+            "version": "v0.3.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thiagodp/router.git",
+                "reference": "ef02959bc6f71a03db5bf9f8e02d02a40b88f8b0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thiagodp/router/zipball/ef02959bc6f71a03db5bf9f8e02d02a40b88f8b0",
+                "reference": "ef02959bc6f71a03db5bf9f8e02d02a40b88f8b0",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "ext-pcre": "*",
+                "php": ">=7.4"
+            },
+            "require-dev": {
+                "kahlan/kahlan": "^5.2",
+                "phpstan/phpstan": "^1.9"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "phputil\\router\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "ExpressJS-like router for PHP",
+            "support": {
+                "issues": "https://github.com/thiagodp/router/issues",
+                "source": "https://github.com/thiagodp/router/tree/v0.3.3"
+            },
+            "time": "2024-11-09T21:23:35+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": {},
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": {},
+    "platform-dev": {},
+    "plugin-api-version": "2.6.0"
+}

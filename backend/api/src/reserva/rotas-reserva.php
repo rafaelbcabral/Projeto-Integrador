@@ -2,7 +2,7 @@
 
 // routes.php
 
-require_once 'src/reserva/controller/reserva-controller.php';
+require_once 'reserva-controller.php';
 
 /**
  * Undocumented function
@@ -11,7 +11,7 @@ require_once 'src/reserva/controller/reserva-controller.php';
  * @param [type] $pdo
  * @return void
  */
-function criarRotas($app, PDO $pdo)
+function criarRotasReserva($app, PDO $pdo)
 {
     $reservaController = new ReservaController($pdo);
 

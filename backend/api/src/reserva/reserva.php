@@ -1,9 +1,8 @@
 <?php
-require_once 'src/infra/DominioException.php';
+require_once './infra/DominioException.php';
+
 class Reserva
 {
-    //Constantes para validações
-    const STATUS_VALIDOS = ['ativo', 'inativo'];
     const MESAS_MAX = 10; // Número máximo de mesas
     const HORARIO_INICIO = '11:00:00'; // Horário de início das reservas
     const HORARIO_FIM = '20:00:00'; // Horário de fim das reservas
@@ -19,16 +18,15 @@ class Reserva
     public int $funcionario;
     public  $status;
 
-    public function __construct($id = null, $nomeCliente, $mesa, $data, $horaInicial, $horaTermino, $funcionario, $status = 'ativo')
+    public function __construct($id = 0, $nomeCliente, $mesa, $data, $horaInicial, $funcionario)
     {
         $this->id = $id ?? 0;
         $this->nomeCliente = $nomeCliente;
         $this->mesa = $mesa;
         $this->data = DateTime::createFromFormat('Y-m-d', $data)->format('Y-m-d'); // Somente data
         $this->horaInicial = DateTime::createFromFormat('H:i:s', $horaInicial)->format('H:i:s'); // Somente hora
-        $this->horaTermino = DateTime::createFromFormat('H:i:s', $horaTermino)->format('H:i:s'); // Somente hora
+        $this->horaTermino = DateTime::createFromFormat('H:i:s', $horaInicial)->modify('+2 hours')->format('H:i:s'); // Adiciona 2 horas e formata;
         $this->funcionario = $funcionario;
-        $this->status = $status;
     }
 
     /**
@@ -47,6 +45,7 @@ class Reserva
 
         // Validação da data e horário
         $dataHoraInicial = DateTime::createFromFormat('Y-m-d H:i:s', $this->data . ' ' . $this->horaInicial);
+
         if (!$dataHoraInicial) {
             $problemas[] = 'Data ou hora de início inválidos.';
         } else {
@@ -73,11 +72,6 @@ class Reserva
             if ($duracaoReserva->h != self::DURACAO_RESERVA) {
                 $problemas[] = 'A reserva deve ter duração de 2 horas.';
             }
-        }
-
-        // Validação do status
-        if (!in_array($this->status, self::STATUS_VALIDOS)) {
-            $problemas[] = 'O status deve ser "ativo" ou "inativo".';
         }
 
         // Validar funcionário (ID do funcionário)

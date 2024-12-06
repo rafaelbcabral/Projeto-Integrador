@@ -1,7 +1,8 @@
 <?php
 
-require_once 'src/reserva/model/reserva.php';
-require_once 'src/mesa/model/mesa.php';
+require_once 'reserva.php';
+require_once './mesa/mesa.php';
+require_once 'listar-reservas.php';
 
 class ReservaRepository
 {
@@ -74,14 +75,28 @@ class ReservaRepository
         return $stmt->fetch(PDO::FETCH_OBJ);
     }
 
-    public function listarReservas()
+    public function listarReservas(): array
     {
+        $sql = "SELECT reserva.id, reserva.nome_cliente, reserva.data_reservada, reserva.inicio_reserva, reserva.fim_reserva, reserva.mesa, reserva.status, funcionario.nome AS nome_funcionario
+        FROM reserva JOIN funcionario ON reserva.funcionario = funcionario.id";
         // $stmt = $this->pdo->query("SELECT * FROM reserva");
-        $stmt = $this->pdo->query("
-        SELECT reserva.id, reserva.nome_cliente, reserva.data_reservada, reserva.inicio_reserva, reserva.fim_reserva, reserva.mesa, reserva.status, funcionario.nome AS nome_funcionario
-        FROM reserva
-        JOIN funcionario ON reserva.funcionario = funcionario.id
-    ");
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $stmt = $this->pdo->query($sql);
+        $reservas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $reservasDTO = [];
+        foreach ($reservas as $reserva) {
+            $dto = new ListarReservaDTO(
+                $reserva['id'],               // id
+                $reserva['nome_cliente'],      // nomeCliente
+                $reserva['mesa'],              // mesa
+                $reserva['data_reservada'],    // data
+                $reserva['inicio_reserva'],    // horaInicial
+                $reserva['fim_reserva'],       // horaTermino
+                $reserva['nome_funcionario'],  // nomeFuncionario
+                $reserva['status']             // status
+            );
+
+            $reservasDTO[] = $dto;
+        }
+        return $reservasDTO;
     }
 }
