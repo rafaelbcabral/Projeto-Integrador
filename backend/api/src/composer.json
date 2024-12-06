@@ -5,11 +5,15 @@
       "": "src/"
     }
   },
-  "authors": [
-    {
-      "name": "Ramonsouzadasilva",
-      "email": "ramon.souzadasilva2@gmail.com"
-    }
+"authors": [
+  {
+    "name": "Ramonsouzadasilva",
+    "email": "ramon.souzadasilva2@gmail.com"
+  },
+  {
+    "name": "RafaelBotelhoCabral",
+    "email": "rafael1311cabral@gmail.com"
+  }
   ],
   "require": {
     "phputil/router": "^0.3.3",
