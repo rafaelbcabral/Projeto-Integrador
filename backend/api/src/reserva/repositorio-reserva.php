@@ -131,4 +131,59 @@ class ReservaRepository
         }
         return $reservasDTO;
     }
+
+    public function listarReservasPorPeriodo(?string $dataInicial = null, ?string $dataFinal = null): array
+    {
+        // Define valores padrão para o período, transformando strings em objetos DateTime
+        $dataInicial = $dataInicial
+            ? DateTime::createFromFormat('Y-m-d', $dataInicial)
+            : new DateTime('first day of this month');
+
+        $dataFinal = $dataFinal
+            ? DateTime::createFromFormat('Y-m-d', $dataFinal)
+            : new DateTime('last day of this month');
+
+        // Valida se as strings são datas válidas
+        if (!$dataInicial || !$dataFinal) {
+            throw new InvalidArgumentException('As datas fornecidas são inválidas.');
+        }
+
+        // Converte as datas para strings no formato Y-m-d
+        $dataInicialStr = $dataInicial->format('Y-m-d');
+        $dataFinalStr = $dataFinal->format('Y-m-d');
+
+        // SQL com filtro por período de datas
+        $sql = "SELECT reserva.id, reserva.nome_cliente, reserva.data_reservada, reserva.inicio_reserva, reserva.fim_reserva, reserva.mesa, reserva.status, funcionario.nome AS nome_funcionario
+            FROM reserva
+            JOIN funcionario ON reserva.funcionario = funcionario.id
+            WHERE reserva.data_reservada BETWEEN :dataInicial AND :dataFinal
+            AND reserva.status IN ('confirmada', 'cancelada') -- Filtro para status específicos
+            ORDER BY reserva.data_reservada ASC, reserva.inicio_reserva ASC, reserva.mesa ASC;";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([
+            'dataInicial' => $dataInicialStr,
+            'dataFinal' => $dataFinalStr
+        ]);
+
+        $reservas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $reservasDTO = [];
+
+        foreach ($reservas as $reserva) {
+            $dto = new ListarReservaDTO(
+                $reserva['id'],               // id
+                $reserva['nome_cliente'],     // nomeCliente
+                $reserva['mesa'],             // mesa
+                $reserva['data_reservada'],   // data
+                $reserva['inicio_reserva'],   // horaInicial
+                $reserva['fim_reserva'],      // horaTermino
+                $reserva['nome_funcionario'], // nomeFuncionario
+                $reserva['status']            // status
+            );
+
+            $reservasDTO[] = $dto;
+        }
+
+        return $reservasDTO;
+    }
 }

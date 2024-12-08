@@ -35,6 +35,10 @@ function criarRotasReserva($app, PDO $pdo)
         $reservaController->listarReservas($req, $res);
     });
 
+    $app->get('/periodo', function ($req, $res) use ($reservaController) {
+        $reservaController->listarReservasPorPeriodo($req, $res);
+    });
+
     $app->get('/todas-as-reservas', function ($req, $res) use ($reservaController) {
         $reservaController->listarReservas($req, $res);
     });
