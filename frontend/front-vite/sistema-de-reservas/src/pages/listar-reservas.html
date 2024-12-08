@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+      }
+      th {
+        background-color: #4caf50;
+        color: white;
+      }
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+      tr:hover {
+        background-color: #ddd;
+      }
+    </style>
+    <script src="../reserva/index.ts" type="module" defer></script>
+  </head>
+  <body>
+    <main>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Cliente</th>
+            <th>Mesa</th>
+            <th>Data</th>
+            <th>Hora Inicial</th>
+            <th>Hora Término</th>
+            <th>Funcionário</th>
+            <th>Status</th>
+            <th>Cancelamento</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- As linhas das reservas serão adicionadas dinamicamente -->
+        </tbody>
+      </table>
+    </main>
+  </body>
+</html>
