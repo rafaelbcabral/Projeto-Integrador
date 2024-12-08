@@ -2,11 +2,10 @@
 // require_once './vendor/autoload.php';
 
 require_once 'vendor/autoload.php';
-require_once './database/conexao.php';
-require_once './mesa/mesa-controller.php';
-require_once './mesa/rotas-mesa.php';
-require_once './reserva/rotas-reserva.php';
-require_once './funcionario/rotas-funcionario.php';
+require_once 'src/database/conexao.php';
+require_once 'src/mesa/rotas-mesa.php';
+require_once 'src/reserva/rotas-reserva.php';
+require_once 'src/funcionario/rotas-funcionario.php';
 
 use phputil\router\Router;
 

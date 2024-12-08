@@ -1,5 +1,5 @@
 <?php
-require_once './infra/DominioException.php';
+require_once 'src/infra/DominioException.php';
 
 class Reserva
 {

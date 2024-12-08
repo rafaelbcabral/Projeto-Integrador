@@ -1,9 +1,9 @@
 <?php
 
 require_once 'repositorio-reserva.php';
-require_once './mesa/mesa-repositorio.php';
-require_once './infra/DominioException.php';
-require_once './infra/NaoEncontradoException.php';
+require_once 'src/mesa/mesa-repositorio.php';
+require_once 'src/infra/DominioException.php';
+require_once 'src/infra/NaoEncontradoException.php';
 require_once 'reserva.php';
 
 class ReservaController
@@ -84,6 +84,12 @@ class ReservaController
 
 
     public function listarReservas($req, $res)
+    {
+        $reservas = $this->reservaRepo->listarReservas();
+        return $res->json($reservas);
+    }
+
+    public function listarTodasAsReservas($req, $res)
     {
         $reservas = $this->reservaRepo->listarReservas();
         return $res->json($reservas);

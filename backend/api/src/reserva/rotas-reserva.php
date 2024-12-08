@@ -34,4 +34,8 @@ function criarRotasReserva($app, PDO $pdo)
     $app->get('/reservas', function ($req, $res) use ($reservaController) {
         $reservaController->listarReservas($req, $res);
     });
+
+    $app->get('/todas-as-reservas', function ($req, $res) use ($reservaController) {
+        $reservaController->listarReservas($req, $res);
+    });
 }
