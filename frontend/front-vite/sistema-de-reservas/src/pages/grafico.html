@@ -4,9 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gráfico de Reservas</title>
+  <!-- Corrigido: Usando src para carregar o arquivo TypeScript compilado -->
+  <script type="module" src="../reserva/grafico-reserva.ts" defer></script>
+  <!-- Carregando a biblioteca Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-
   <form id="relatorioForm">
     <label for="dataInicio">Data Inicial:</label>
     <input type="date" id="dataInicio" name="dataInicio">
@@ -20,153 +23,5 @@
   <div>
     <canvas id="myChart"></canvas>
   </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-  <script>
-    function gerarDatasDoIntervalo(dataInicio, dataFim) {
-      const datas = [];
-      let dataAtual = new Date(dataInicio);
-      while (dataAtual <= dataFim) { 
-        const dataFormatada = formatarData(dataAtual);
-        datas.push(dataFormatada);
-        dataAtual.setDate(dataAtual.getDate() + 1); // incrementando
-      }
-      return datas;
-    }
-
-    function formatarData(data) {
-      const ano = data.getFullYear();
-      const mes = String(data.getMonth() + 1).padStart(2, '0');
-      const dia = String(data.getDate()).padStart(2, '0');
-      return `${ano}-${mes}-${dia}`;
-    }
-
-    function obterDatasMesAtual() {
-      const hoje = new Date();
-      const ano = hoje.getFullYear(); 
-      const mes = hoje.getMonth(); // (0-11)
-
-      const primeiroDia = new Date(ano, mes, 1); // primeiro dia do mes
-      const ultimoDia = new Date(ano, mes + 1, 0); // (0-11) e zero no date é o ultimo dia do mes anterior
-
-      return { primeiroDia, ultimoDia };
-    }
-
-    function criarGrafico(ctx, labels, dados) {
-      return new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: labels, 
-          datasets: [{
-            label: 'Relatório de Reservas',
-            data: dados, 
-            backgroundColor: 'rgba(54, 162, 235, 0.6)',
-            borderColor: 'rgba(54, 162, 235, 1)',
-            borderWidth: 1
-          }]
-        },
-        options: {
-          responsive: true,
-          scales: {
-            x: {
-              title: {
-                display: true,
-                text: 'Datas'
-              }
-            },
-            y: {
-              title: {
-                display: true,
-                text: 'Quantidade de Reservas'
-              },
-              beginAtZero: true,
-              min: 0, 
-              max: 50, // Limite máximo de reservas por dia
-            }
-          }
-        }
-      });
-    }
-    
-    function formatarDataParaGrafico(data) { 
-      const [ano, mes, dia] = data.split('-'); // quebrar data
-      return `${dia}/${mes}`; 
-    }
-
-    const processarReservas = (reservas, labelsX) => {
-      let valores = Array(labelsX.length).fill(0); // resetando todos os valores 
-
-      reservas.forEach(reserva => {
-        const dataReserva = reserva.data; // Formato '2024-12-15' 
-
-        const dataFormatada = formatarDataParaGrafico(dataReserva); 
-
-        const index = labelsX.indexOf(dataFormatada); // retorna 1 se sim e -1 se nao
-        if (index !== -1) {
-          valores[index] += 1; // + reservas
-        }
-      });
-
-      if (grafico1) {
-        grafico1.data.labels = labelsX;
-        grafico1.data.datasets[0].data = valores;
-        grafico1.update(); // Atualizar
-      }
-    };
-
-
-const obterDados = (dataInicio, dataFim) => {
-  const endpoint = "http://localhost:8000/reservas";
-
-  fetch(endpoint)
-    .then(res => res.json())
-    .then(data => {
-      if (!Array.isArray(data)) { // Verificando se a resposta é um array de objetos
-        console.error("Formato de resposta incorreto. Esperado um array de objetos.");
-        return;
-      }
-
-      const reservasNoPeriodo = data.filter(reserva => {
-        const dataReserva = new Date(reserva.data); // Facilitar a comparação com as datas dataInicio e dataFim
-        return dataReserva >= dataInicio && dataReserva <= dataFim; // Comparando considerando as horas
-      });
-
-      const labelsX = gerarDatasDoIntervalo(dataInicio, dataFim).map(data => formatarDataParaGrafico(data)); // Eixo X gerado
-
-      processarReservas(reservasNoPeriodo, labelsX); // Processar e atualizar o gráfico com as reservas do intervalo
-    })
-    .catch(erro => {
-      console.error("Erro ao obter dados: " + erro);
-    });
-};
-
-
-
-    const ctx = document.getElementById('myChart').getContext('2d');
-    let grafico1; // garantir que já exista para atualizar os dados do gráfico, destruir o gráfico, etc
-
-    const { primeiroDia, ultimoDia } = obterDatasMesAtual();
-
-    grafico1 = criarGrafico(ctx, [], []); // Inicializando o gráfico vazio
-
-    obterDados(primeiroDia, ultimoDia); // Obter dados do mês atual e atualizar o gráfico
-
-    document.getElementById('relatorioForm').addEventListener('submit', (event) => {
-      event.preventDefault();
-
-      const dataInicio = new Date(document.getElementById('dataInicio').value);
-      const dataFim = new Date(document.getElementById('dataFim').value);
-
-      if (grafico1) {
-        grafico1.destroy(); // Destruir o gráfico anterior
-      }
-
-      grafico1 = criarGrafico(ctx, [], []); // Recriar o gráfico com dados vazios
-      obterDados(dataInicio, dataFim); // Obter dados e atualizar o gráfico
-    });
-
-  </script>
-
 </body>
 </html>
