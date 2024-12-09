@@ -148,19 +148,24 @@ obterDados(primeiroDia, ultimoDia);
 // Adicionar evento para gerar o relatório no intervalo selecionado
 const form = document.getElementById('relatorioForm');
 if (form) {
+
   form.addEventListener('submit', (event) => {
     event.preventDefault();
 
-    const dataInicio = new Date((document.getElementById('dataInicio') as HTMLInputElement).value);
-    const dataFim = new Date((document.getElementById('dataFim') as HTMLInputElement).value);
+    const dataInicioInput = (document.getElementById('dataInicio') as HTMLInputElement).value;
+    const dataInicio = new Date(`${dataInicioInput}T00:00:00`); // Força a hora correta
 
-    if (grafico1) {
-      grafico1.destroy();
+    const dataFimInput = (document.getElementById('dataFim') as HTMLInputElement).value;
+    const dataFim = new Date(`${dataFimInput}T23:59:59`); // Força a hora correta
+
+    if (grafico1) { //recriando..
+        grafico1.destroy();
     }
 
-    grafico1 = criarGrafico(ctx, [], []); // Recriar o grapico
-    obterDados(dataInicio, dataFim); // Obter dados e atualizar o grafico
-  });
+    grafico1 = criarGrafico(ctx, [], []); // Recriar o gráfico vazio
+    obterDados(dataInicio, dataFim); // Obter dados para o intervalo correto
+});
+
 } else {
   console.error("Elemento 'relatorioForm' não encontrado.");
 }
