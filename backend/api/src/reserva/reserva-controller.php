@@ -97,14 +97,9 @@ class ReservaController
 
     public function listarReservasPorPeriodo($req, $res)
     {
-        var_dump($req->queries());
-
         $dados = (array) $req->queries();
-        var_dump($dados);
         $dataInicial = $dados['dataInicial'];
         $dataFinal = $dados['dataFinal'];
-        var_dump($dataInicial);
-        var_dump($dataFinal);
         $reservas = $this->reservaRepo->listarReservasPorPeriodo($dataInicial, $dataFinal);
         return $res->json($reservas);
     }
