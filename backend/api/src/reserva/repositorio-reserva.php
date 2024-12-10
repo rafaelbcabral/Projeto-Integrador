@@ -153,7 +153,8 @@ class ReservaRepository
         $dataFinalStr = $dataFinal->format('Y-m-d');
 
         // SQL com filtro por período de datas
-        $sql = "SELECT reserva.id, reserva.nome_cliente, reserva.data_reservada, reserva.inicio_reserva, reserva.fim_reserva, reserva.mesa, reserva.status, funcionario.nome AS nome_funcionario
+        $sql = "SELECT reserva.id, reserva.nome_cliente, reserva.data_reservada, reserva.inicio_reserva, 
+            reserva.fim_reserva, reserva.mesa, reserva.status, funcionario.nome AS nome_funcionario
             FROM reserva
             JOIN funcionario ON reserva.funcionario = funcionario.id
             WHERE reserva.data_reservada BETWEEN :dataInicial AND :dataFinal

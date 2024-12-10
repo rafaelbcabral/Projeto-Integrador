@@ -30,9 +30,9 @@ class Reserva
     }
 
     /**
-     * Valida os dados da reserva
+     * Undocumented function
      *
-     * @return array<int, string>
+     * @return array
      */
     public function validar(): array
     {
