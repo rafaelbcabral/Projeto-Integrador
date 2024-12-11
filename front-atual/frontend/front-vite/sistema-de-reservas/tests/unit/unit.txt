@@ -1,1 +1,0 @@
-Testes Unitários (pasta /unit): Testam funções, classes ou métodos isolados, sem dependências externas.

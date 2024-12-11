@@ -1,1 +1,0 @@
-Testes End-to-End (E2E) (pasta /e2e): Simulam a experiência do usuário final, navegando e interagindo com a aplicação.

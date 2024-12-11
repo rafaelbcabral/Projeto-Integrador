@@ -1,1 +1,0 @@
-Testes de Integração (pasta /integration): Testam a comunicação entre módulos, por exemplo, se o gestor-reserva.ts consegue se comunicar corretamente com reserva-controller.ts.
