@@ -7,20 +7,23 @@ class Reserva
     const HORARIO_INICIO = '11:00:00'; // Horário de início das reservas
     const HORARIO_FIM = '20:00:00'; // Horário de fim das reservas
     const DURACAO_RESERVA = 2; // Duração da reserva em horas
+    // Definir constantes para os limites de mesas
+    const MESAS_MAX_FINAL_DE_SEMANA = 10; // Limite padrão de mesas
+    const MESAS_MAX_DIA_DE_SEMANA = 7; // Limite para quinta e sexta
 
     //Variaveis
     public int $id;
     public string $nomeCliente;
     public int $mesa;
-    public  $data;
-    public  $horaInicial;
-    public $horaTermino;
+    public string $data;
+    public  string $horaInicial;
+    public string $horaTermino;
     public int $funcionario;
-    public  $status;
+    public string $status;
 
-    public function __construct($id = 0, $nomeCliente, $mesa, $data, $horaInicial, $funcionario)
+    public function __construct($id = 0, $nomeCliente, $mesa, $data, $horaInicial, $funcionario = null)
     {
-        $this->id = $id ?? 0;
+        $this->id = 0;
         $this->nomeCliente = $nomeCliente;
         $this->mesa = $mesa;
         $this->data = DateTime::createFromFormat('Y-m-d', $data)->format('Y-m-d'); // Somente data
@@ -38,9 +41,20 @@ class Reserva
     {
         $problemas = [];
 
+        // // Validação da mesa (Número máximo de mesas)
+        // if ($this->mesa < 1 || $this->mesa > self::MESAS_MAX) {
+        //     $problemas[] = 'O número da mesa deve ser entre 1 e ' . self::MESAS_MAX . '.';
+        // }
+
+        // Obter o dia da semana atual
+        $diaSemana = date('N'); // 1 = Segunda, 7 = Domingo
+
+        // Determinar o número máximo permitido de mesas
+        $mesasMax = in_array($diaSemana, [4, 5]) ? self::MESAS_MAX_DIA_DE_SEMANA : self::MESAS_MAX_FINAL_DE_SEMANA;
+
         // Validação da mesa (Número máximo de mesas)
-        if ($this->mesa < 1 || $this->mesa > self::MESAS_MAX) {
-            $problemas[] = 'O número da mesa deve ser entre 1 e ' . self::MESAS_MAX . '.';
+        if ($this->mesa < 1 || $this->mesa > $mesasMax) {
+            $problemas[] = 'O número da mesa deve ser entre 1 e ' . $mesasMax . '.';
         }
 
         // Validação da data e horário

@@ -1,4 +1,8 @@
 <?php
+
+use phputil\router\HttpRequest;
+use phputil\router\HttpResponse;
+
 require_once 'funcionario-repositorio.php';
 
 class FuncionarioController
@@ -12,7 +16,7 @@ class FuncionarioController
         $this->funcionarioRepo = new FuncionarioRepositorio($pdo);
     }
 
-    public function listarFuncionarios($req, $res)
+    public function listarFuncionarios(HttpRequest $req, HttpResponse $res)
     {
         $funcionarios = $this->funcionarioRepo->listarFuncionarios();
         return $res->json($funcionarios);

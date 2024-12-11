@@ -1,5 +1,8 @@
 <?php
 
+use phputil\router\HttpRequest;
+use phputil\router\HttpResponse;
+
 require_once 'repositorio-reserva.php';
 require_once 'src/mesa/mesa-repositorio.php';
 require_once 'src/infra/DominioException.php';
@@ -8,33 +11,30 @@ require_once 'reserva.php';
 
 class ReservaController
 {
-    protected ReservaRepository $reservaRepo;
-    protected MesaRepository $mesaRepo;
+    protected ReservaRepositorio $reservaRepo;
+    protected MesaRepositorio $mesaRepo;
     protected PDO $pdo;
 
     public function __construct(PDO $pdo)
     {
         $this->pdo = $pdo;
-        $this->reservaRepo = new ReservaRepository($pdo);
-        $this->mesaRepo = new MesaRepository($pdo);
+        $this->reservaRepo = new ReservaRepositorio($pdo);
+        $this->mesaRepo = new MesaRepositorio($pdo);
     }
 
 
-    public function criarReserva($req, $res)
+    public function criarReserva(HttpRequest $req, HttpResponse $res)
     {
         // Obtém os dados do corpo da requisição
         $dados = (array) $req->body();
-
         // Sanitiza os dados de entrada
         foreach ($dados as $chave => &$valor) {
             $valor = htmlspecialchars($valor);
         }
-
         // Verifique se todas as chaves estão presentes
         if (!isset($dados['nomeCliente'], $dados['data'], $dados['horarioInicial'], $dados['mesa'], $dados['funcionario'])) {
             return $res->json(['status' => 'error', 'message' => 'Dados faltando'], 400);
         }
-
         // Criar nova reserva
         $reserva = new Reserva(
             0,
@@ -44,15 +44,24 @@ class ReservaController
             $dados['horarioInicial'],
             $dados['funcionario']
         );
-
         // Verificar disponibilidade da mesa antes de validar a reserva
         $disponivel = $this->reservaRepo->verificarDisponibilidade($reserva);
-
+        $reservasDia =  $this->reservaRepo->contarReservasDia($reserva->data);
         // Verifica se a mesa está disponível
         if ($disponivel) {
             return $res->json(['status' => 'error', 'message' => 'Mesa não disponível para o horário solicitado'], 400);
         }
-
+        if (date('N', strtotime($reserva->data)) > 5) {
+            // Final de semana (sábado e domingo)
+            if ($reservasDia >= 10) {
+                return $res->json(['status' => 'error', 'message' => 'Total de reservas excedido para o final de semana'], 400);
+            }
+        } else if (date('N', strtotime($reserva->data)) == 4 || date('N', strtotime($reserva->data)) == 5) {
+            // Dias de semana (segunda a sexta-feira)
+            if ($reservasDia >= 7) {
+                return $res->json(['status' => 'error', 'message' => 'Total de reservas excedido para quinta e sexta-feira, o máximo são 7 reservas dias de semana.'], 400);
+            }
+        }
         try {
             // Valida a reserva
             $problemas = $reserva->validar();
@@ -83,22 +92,26 @@ class ReservaController
     }
 
 
-    public function listarReservas($req, $res)
+    public function listarReservas(HttpRequest $req, HttpResponse $res)
     {
         $reservas = $this->reservaRepo->listarReservas();
         return $res->json($reservas);
     }
 
-    public function listarTodasAsReservas($req, $res)
+    public function listarTodasAsReservas(HttpRequest $req, HttpResponse $res)
     {
         $reservas = $this->reservaRepo->listarReservas();
         return $res->json($reservas);
     }
 
-    public function listarReservasPorPeriodo($req, $res)
+    public function listarReservasPorPeriodo(HttpRequest $req, HttpResponse $res)
     {
 
         $dados = (array) $req->queries();
+        // Sanitiza os dados de entrada
+        foreach ($dados as $chave => &$valor) {
+            $valor = htmlspecialchars($valor);
+        }
 
         $dataInicial = $dados['dataInicial'];
         $dataFinal = $dados['dataFinal'];
@@ -108,7 +121,7 @@ class ReservaController
     }
 
 
-    public function cancelarReserva($req, $res)
+    public function cancelarReserva(HttpRequest $req, HttpResponse $res)
     {
         $id = (int) $req->param("id");
         if (empty($id) || !is_numeric($id) || $id <= 0) {

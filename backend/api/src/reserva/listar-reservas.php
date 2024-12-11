@@ -29,4 +29,10 @@ class ListarReservaDTO
         $this->nomeFuncionario = $nomeFuncionario;
         $this->status = $status;
     }
+
+    public function formatarData(): string
+    {
+        $dateTime = \DateTime::createFromFormat('Y-m-d', $this->data);
+        return $dateTime ? $dateTime->format('d/m/Y') : $this->data;
+    }
 }

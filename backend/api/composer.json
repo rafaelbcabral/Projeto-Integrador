@@ -14,7 +14,7 @@
     "dump": "composer dump-autoload",
     "check": "phpstan analyze",
     "teste": "kahlan",
-    "cov": "kahlan --coverage=1"
+    "cov": "kahlan --coverage=4"
   },
   "authors": [
     {

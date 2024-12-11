@@ -11,7 +11,7 @@ class FuncionarioRepositorio
     }
 
 
-    public function listarFuncionarios()
+    public function listarFuncionarios(): array
     {
         $sql = "SELECT id, nome from funcionario";
         $stmt = $this->pdo->query($sql);

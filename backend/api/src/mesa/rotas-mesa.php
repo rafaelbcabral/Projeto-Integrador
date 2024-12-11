@@ -1,7 +1,7 @@
 <?php
 require_once 'mesa-controller.php';
 
-function criarRotasMesa($app, PDO $pdo)
+function criarRotasMesa($app, PDO $pdo): void
 {
     $mesaController = new MesaController($pdo);
 

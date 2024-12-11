@@ -4,7 +4,7 @@ require_once 'reserva.php';
 require_once 'src/mesa/mesa.php';
 require_once 'listar-reservas.php';
 
-class ReservaRepository
+class ReservaRepositorio
 {
     protected $pdo;
 
@@ -13,7 +13,7 @@ class ReservaRepository
         $this->pdo = $pdo;
     }
 
-    public function verificarDisponibilidade(Reserva $reserva)
+    public function verificarDisponibilidade(Reserva $reserva): bool
     {
         // Prepara a consulta para verificar a disponibilidade da mesa no horário solicitado
         $stmt = $this->pdo->prepare("
@@ -39,8 +39,24 @@ class ReservaRepository
         return count($resultados) > 0;
     }
 
+    public function contarReservasDia(string $data): int
+    {
+        // Determinar o limite de reservas para essa data
+        $diaSemana = (int)date('N', strtotime($data)); // 1 = Segunda, 7 = Domingo
+        $limiteReservas = ($diaSemana >= 5) ? Reserva::MESAS_MAX_FINAL_DE_SEMANA : Reserva::MESAS_MAX_DIA_DE_SEMANA;
+
+        // Consultar quantas reservas existem para essa data
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM reserva WHERE data_reservada = ?");
+        $stmt->execute([$data]);
+
+        $quantidadeReservas = (int)$stmt->fetchColumn();
+
+        return $quantidadeReservas;
+    }
+
     public function salvarReserva(Reserva $reserva)
     {
+
         $stmt = $this->pdo->prepare("INSERT INTO reserva (nome_cliente, data_reservada, inicio_reserva, 
         fim_reserva, mesa, funcionario) VALUES (?, ?, ?, ?, ?, ?)");
 

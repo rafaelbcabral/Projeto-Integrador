@@ -1,24 +1,28 @@
 <?php
+
+use phputil\router\HttpRequest;
+use phputil\router\HttpResponse;
+
 require_once 'mesa-repositorio.php';
 
 class MesaController
 {
-    protected MesaRepository $mesaRepo;
+    protected MesaRepositorio $mesaRepo;
     protected PDO $pdo;
 
     public function __construct(PDO $pdo)
     {
         $this->pdo = $pdo;
-        $this->mesaRepo = new MesaRepository($pdo);
+        $this->mesaRepo = new MesaRepositorio($pdo);
     }
 
-    public function listarMesas($req, $res)
+    public function listarMesas(HttpRequest $req, HttpResponse $res)
     {
         $mesas = $this->mesaRepo->listarMesas();
         return $res->json($mesas);
     }
 
-    public function listarMesasDisponiveis($req, $res)
+    public function listarMesasDisponiveis(HttpRequest $req, HttpResponse $res)
     {
         // Usando getQuery() ou método alternativo
         $dados = (array) $req->queries('data');

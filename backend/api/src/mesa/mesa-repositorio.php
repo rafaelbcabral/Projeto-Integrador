@@ -1,6 +1,6 @@
 <?php
 
-class MesaRepository
+class MesaRepositorio
 {
     protected PDO $pdo;
 
@@ -15,7 +15,7 @@ class MesaRepository
         $stmt->execute([$status, $mesa_id]);
     }
 
-    public function listarMesas()
+    public function listarMesas(): array
     {
         $sql = "SELECT * from mesa";
         $stmt = $this->pdo->query($sql);
@@ -24,12 +24,8 @@ class MesaRepository
     }
 
     // Função para verificar a disponibilidade de uma mesa
-    public function verificarDisponibilidade($data, $horaInicial)
+    public function verificarDisponibilidade($data, $horaInicial): bool
     {
-        // if (is_array($horaInicial)) {
-        //     $horaInicial = $horaInicial[0]; // Adjust as necessary based on how your data is structured
-        // }
-
         // Definindo uma duração fixa de 2 horas para a reserva
         $horaFinal = date('H:i:s', strtotime($horaInicial . ' +2 hours'));
 
@@ -56,18 +52,15 @@ class MesaRepository
         return count($resultados) > 0;
     }
 
-    public function listarMesasDisponiveis($data, $horaInicial)
+    public function listarMesasDisponiveis($data, $horaInicial): array
     {
         $sql = "SELECT * FROM mesa";
         $stmt = $this->pdo->query($sql);
         $mesas = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
         // Filtra as mesas disponíveis utilizando a função de verificar disponibilidade
         $mesasDisponiveis = [];
-
         // Definindo uma duração fixa de 2 horas para a reserva
         $horaFinal = date('H:i:s', strtotime($horaInicial . ' +2 hours'));
-
         foreach ($mesas as $mesa) {
             // Verifica a disponibilidade de cada mesa para o horário solicitado
             $stmt = $this->pdo->prepare("
