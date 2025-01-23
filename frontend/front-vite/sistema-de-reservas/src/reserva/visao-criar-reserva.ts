@@ -2,6 +2,7 @@ import { ControladoraFuncionarios } from "../funcionario/funcionario-controller"
 import { ControladoraMesas } from "../mesa/mesa-controller";
 import { Reserva } from "./criar-reserva";
 import { ControladoraReservas } from "./reserva-controller";
+import { showToast } from "../infra/toastify";
 
 export class VisaoCriarReservas {
   controladoraFuncionario: ControladoraFuncionarios;
@@ -24,7 +25,7 @@ export class VisaoCriarReservas {
 
     const form = document.querySelector("form"); // Ensure this matches your form's selector
     if (!form) {
-      console.error("Formulário não encontrado.");
+      showToast('Formulário não encontrado! ', 'erro');
       return;
     }
 
@@ -37,21 +38,17 @@ export class VisaoCriarReservas {
 
   // Adiciona os listeners de evento nos campos de data e horário
   adicionarListenersParaDataEHorario() {
-    const inputData = document.getElementById("data") as HTMLInputElement;
-    const inputHorario = document.getElementById(
-      "horarioInicial"
-    ) as HTMLSelectElement;
-
-    // Quando a data ou o horário inicial mudar, consulta as mesas disponíveis
-    inputData.addEventListener(
-      "change",
-      this.atualizarMesasDisponiveis.bind(this)
-    );
-    inputHorario.addEventListener(
-      "change",
-      this.atualizarMesasDisponiveis.bind(this)
-    );
+    const inputData = document.getElementById("data");
+    const inputHorario = document.getElementById("horarioInicial");
+  
+    if (inputData && inputHorario) {
+      inputData.addEventListener("change", this.atualizarMesasDisponiveis.bind(this));
+      inputHorario.addEventListener("change", this.atualizarMesasDisponiveis.bind(this));
+    } else {
+      console.error("Erro: os elementos 'data' ou 'horarioInicial' não foram encontrados.");
+    }
   }
+  
 
   // Função chamada quando data ou horário inicial mudar
   atualizarMesasDisponiveis() {
@@ -76,13 +73,9 @@ export class VisaoCriarReservas {
         <p>Mesa: ${reserva.mesa}</p>
         <p>Data: ${reserva.data}</p>
         <p>Hora: ${reserva.horarioInicial}</p>
+        <p>telefone: ${reserva.telefone}</p>
       `;
     }
-  }
-
-  // Exibe mensagem de erro
-  exibirErro(error: any) {
-    alert(error instanceof Error ? error.message : error);
   }
 
   // Captura os dados do formulário e os envia para a controladora de reserva
@@ -97,6 +90,9 @@ export class VisaoCriarReservas {
     const funcionarioId = (
       document.getElementById("funcionario") as HTMLSelectElement
     ).value;
+    const telefone = (
+      document.getElementById("telefone") as HTMLSelectElement
+    ).value;
 
     return {
       nomeCliente,
@@ -104,6 +100,7 @@ export class VisaoCriarReservas {
       data,
       horarioInicial,
       funcionario: Number(funcionarioId),
+      telefone: Number(telefone)
     };
   }
 }

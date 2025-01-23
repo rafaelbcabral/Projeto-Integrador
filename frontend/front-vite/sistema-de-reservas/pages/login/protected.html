@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Página Protegida</title>
+    <script type="module" src="/src/login/protectedLogin.ts"></script>
+    <!-- Incluindo o Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100 font-sans text-gray-900 flex justify-center items-center min-h-screen">
+
+    <div class="flex items-center justify-center">
+
+      <div class="w-full max-w-lg p-6 bg-white rounded-lg shadow-lg text-center space-y-6">
+        <h1 class="text-4xl font-semibold text-indigo-600">Página Protegida</h1>
+        <p class="text-lg text-gray-700">Você só pode acessar esta página se estiver logado.</p>
+        
+        <button class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <a href="/login">Voltar</a>
+        </button>
+      </div>
+    </div>
+
+  </body>
+</html>

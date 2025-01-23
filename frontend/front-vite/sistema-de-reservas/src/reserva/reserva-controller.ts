@@ -1,6 +1,7 @@
 import { Reserva } from "./criar-reserva";
 import { GestorReservas } from "./gestor-reserva";
 import { VisaoCriarReservas } from "./visao-criar-reserva";
+import { exibirErro } from "../infra/exibir-erro";
 
 export class ControladoraReservas {
   private gestor: GestorReservas;
@@ -12,7 +13,7 @@ export class ControladoraReservas {
   }
 
   async criarReserva() {
-    const { nomeCliente, mesa, data, horarioInicial, funcionario } =
+    const { nomeCliente, mesa, data, horarioInicial, funcionario, telefone } =
       this.visao.capturarDadosFormulario();
     try {
       // Cria o objeto de reserva
@@ -22,15 +23,13 @@ export class ControladoraReservas {
         data,
         horarioInicial,
         funcionario,
+        telefone,
       };
-
-      console.log(reserva);
 
       // Envia o objeto para o gestor para criar a reserva
       await this.gestor.criarReserva(reserva);
     } catch (error) {
-      console.error("Erro ao criar reserva:", error);
-      this.visao.exibirErro(error);
+      exibirErro('Erro ao criar reserva. ', error);
     }
   }
 }

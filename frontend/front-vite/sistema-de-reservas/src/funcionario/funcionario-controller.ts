@@ -1,5 +1,6 @@
 import { GestorFuncionarios } from "./gestor-funcionario";
 import { VisaoFuncionarios } from "./visao-funcionario";
+import { exibirErro } from '../infra/exibir-erro.ts';
 
 export class ControladoraFuncionarios {
   private gestor: GestorFuncionarios;
@@ -13,9 +14,12 @@ export class ControladoraFuncionarios {
   async listarFuncionarios() {
     try {
       const funcionarios = await this.gestor.listarFuncionarios();
+      console.log(funcionarios);
       this.visao.exibirFuncionarios(funcionarios);
     } catch (error) {
-      console.error("Erro ao listar funcionários:", error);
+      exibirErro('Erro ao listar funcionários', error);
     }
   }
+  
+  
 }

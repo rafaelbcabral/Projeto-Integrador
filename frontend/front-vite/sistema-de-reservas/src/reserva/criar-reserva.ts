@@ -4,4 +4,5 @@ export interface Reserva {
   data: string;
   horarioInicial: string;
   funcionario: number;
+  telefone: number;
 }

@@ -4,8 +4,8 @@ export interface ReservaListar {
   nomeCliente: string;
   mesa: string;
   data: string;
-  horaInicial: string;
-  horaTermino: string;
+  inicio: string;
+  fim: string;
   nomeFuncionario: string;
   status: string;
 }

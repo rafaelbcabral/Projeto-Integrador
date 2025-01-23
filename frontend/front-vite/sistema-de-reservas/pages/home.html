@@ -1,0 +1,85 @@
+<div class="ml-16">
+  <div class="flex-1 p-6">
+      
+    <div class="flex justify-between items-center mb-6">
+      <h2 class="text-3xl font-bold">La Saveur | Home Admin</h2>
+      <div class="flex items-center space-x-4" id="loginUsuario">
+        <button 
+          onclick="logout()" 
+          class="py-2 px-4 bg-red-800 text-white rounded-3xl hover:bg-white focus:outline-none hover:border-red-500 hover:border-2">
+          <a href="/login" class="hover:text-red-800">Sair</a>
+        </button>
+      </div>
+  </div>
+  
+  <!-- Dashboard Summary Cards -->
+  <div class="grid grid-cols-3 gap-6 mb-6">
+    <div class="bg-sky-800 p-6 rounded-lg shadow text-center justify-center items-center font-bold text-lg hover:bg-sky-700">
+      <a href="/fazer-reservas" class="btn  text-white px-4 py-2 rounded">Cadastrar Reserva</a>
+      
+    </div>
+    <div class=" p-6 rounded-lg shadow bg-green-700 text-center justify-center items-center font-bold text-lg hover:bg-green-600">
+      <a href="/listar-reservas" class="btn   text-white px-4 py-2 rounded">Listagem de reservas</a>
+    </div>
+    <div class=" p-6 rounded-lg shadow bg-sky-950 text-center justify-center items-center font-bold text-lg hover:bg-sky-800">
+      <a href="/home" class="btn text-white px-4 py-2 rounded">Consumo de Mesas</a>
+      
+    </div>
+  </div>
+
+  <!-- Reservas Section -->
+  <div class="bg-white p-6 rounded-lg shadow-xl mb-10 mt-10">
+    <h3 class="text-xl font-semibold mb-4">Listagem das Reservas</h3>
+    <div class="overflow-x-auto">
+      <table class="w-full border-collapse border border-gray-300">
+        <thead>
+          <tr class="bg-gray-200">
+            <!-- <th class="border border-gray-300 p-2">#</th> -->
+            <th class="border border-gray-300 p-2">Cliente</th>
+            <th class="border border-gray-300 p-2">Mesa</th>
+            <th class="border border-gray-300 p-2">Data</th>
+            <th class="border border-gray-300 p-2">Hora Inicial</th>
+            <th class="border border-gray-300 p-2">Hora Término</th>
+            <th class="border border-gray-300 p-2">Funcionário</th>
+            <th class="border border-gray-300 p-2">Status</th>
+            <th class="border border-gray-300 p-2">Cancelamento</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <!-- <td class="border border-gray-300 p-2 text-center">1</td> -->
+            <td class="border border-gray-300 p-2" id="dataHora">#</td>
+            <td class="border border-gray-300 p-2" id="mesa">#</td>
+            <td class="border border-gray-300 p-2" id="cliente">#</td>
+            <td class="border border-gray-300 p-2" id="Status">#</td>
+            <td class="border border-gray-300 p-2 text-center">
+              <button id="cancelar">Cancelar</button>
+              <button class="bg-gray-400 text-white px-4 py-2 rounded hidden" id="cancelado">Cancelado</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="text-right mt-4">
+      <button class="bg-sky-800 text-white px-6 py-2 rounded"><a href="/fazer-reservas">Criar Reservas</a></button>
+    </div>
+  </div>
+
+  <!-- Reservas por Período Section -->
+  <div class="bg-white p-6 rounded-lg shadow-lg">
+    <h3 class="text-xl font-semibold mb-4">Relatório da primeira parte do projeto.</h3>
+    <div class="grid grid-cols-3 gap-4 items-end">
+      <div>
+        <label for="start_date" class="block text-sm font-medium">Data Inicial</label>
+        <input type="date" id="start_date" class="w-full border border-gray-300 rounded px-4 py-2">
+      </div>
+      <div>
+        <label for="end_date" class="block text-sm font-medium">Data Final</label>
+        <input type="date" id="end_date" class="w-full border border-gray-300 rounded px-4 py-2">
+      </div>
+      <div>
+        <button class="bg-sky-800 text-white px-6 py-2 rounded">Gerar Relatório</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -85,6 +85,7 @@ describe('GestorReservas', () => {
       data: '2024-12-10',
       horarioInicial: '12:00',
       funcionario: 123,
+      telefone: 988103858
     };
 
     vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce({
@@ -116,6 +117,7 @@ describe('GestorReservas', () => {
       data: '2024-12-10',
       horarioInicial: '12:00',
       funcionario: 123,
+      telefone: 988103858,
     })).rejects.toThrow('Erro ao criar a reserva');
   });
 });

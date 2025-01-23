@@ -1,9 +1,10 @@
 import { Funcionario } from "./funcionario";
+import { url } from "../infra/url.ts";
 
 export class GestorFuncionarios {
   async listarFuncionarios(): Promise<Funcionario[]> {
     try {
-      const response = await fetch("http://localhost:8000/funcionarios");
+      const response = await fetch(`${url}/funcionarios`);
       if (!response.ok) {
         throw new Error("Erro ao consultar funcionários");
       }
@@ -11,7 +12,8 @@ export class GestorFuncionarios {
       return funcionarios;
     } catch (error) {
       console.error("Erro ao listar funcionários:", error);
-      return [];
+      throw error;
     }
   }
+  
 }

@@ -1,6 +1,7 @@
 import { GestorReservas } from "./gestor-reserva";
 import { ReservaListar } from "./listar-reservas";
 import { VisaoListarReservas } from "./visao-listar-reservas";
+import { exibirErro } from "../infra/exibir-erro";
 
 export class ControladoraListarReservas {
   private gestor: GestorReservas;
@@ -18,7 +19,7 @@ export class ControladoraListarReservas {
       // Passa os dados para a visão para exibir na tabela
       this.visao.desenharReservas(reservas);
     } catch (error) {
-      console.error("Erro ao listar reservas:", error);
+      exibirErro('Erro ao listar reservas. ', error);
     }
   }
 
@@ -26,7 +27,7 @@ export class ControladoraListarReservas {
     try {
       await this.gestor.cancelarReserva(id);
     } catch (error) {
-      console.error("Erro ao listar reservas:", error);
+      exibirErro('Erro ao listar reservas. ', error);
     }
   }
 }

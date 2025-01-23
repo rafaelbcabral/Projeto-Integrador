@@ -1,4 +1,3 @@
-// vite.config.ts
 import { defineConfig } from 'vite';
 
 export default defineConfig({
@@ -8,7 +7,5 @@ export default defineConfig({
   },
   server: {
     open: true, // Abre o navegador automaticamente
-  },
-  
+  }
 });
-

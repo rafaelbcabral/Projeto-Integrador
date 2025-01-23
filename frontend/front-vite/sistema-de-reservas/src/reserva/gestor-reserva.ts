@@ -1,12 +1,15 @@
 import { Reserva } from "./criar-reserva";
 import { ReservaListar } from "./listar-reservas";
+import { url } from "../infra/url.ts";
+import { exibirErro } from "../infra/exibir-erro.ts";
+
+const urlreserva = `${url}/reservas`;
 
 export class GestorReservas {
   async criarReserva(reserva: Reserva): Promise<Reserva> {
-    console.log(reserva);
 
-    try {
-      const response = await fetch("http://localhost:8000/reservas", {
+
+      const response = await fetch(urlreserva, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -15,7 +18,7 @@ export class GestorReservas {
       });
 
       if (!response.ok) {
-        throw new Error("Erro ao criar a reserva");
+        exibirErro("Erro ao criar a reserva. ", response.status);
       }
       // Alerta de confirmação antes de redirecionar
       window.alert(
@@ -26,16 +29,12 @@ export class GestorReservas {
 
       const reservaCriada: Reserva = await response.json();
       return reservaCriada;
-      console.log(reservaCriada);
-    } catch (error) {
-      console.error("Erro ao criar reserva:", error);
-      throw error;
-    }
+
   }
 
   async listarReservas(): Promise<ReservaListar[]> {
-    try {
-      const response = await fetch("http://localhost:8000/reservas", {
+
+      const response = await fetch(urlreserva, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -43,27 +42,22 @@ export class GestorReservas {
       });
 
       if (!response.ok) {
-        throw new Error("Erro ao listar as reservas");
+        exibirErro("Erro ao listar reservas. ", response.status);
       }
 
       const reservas: ReservaListar[] = await response.json();
       return reservas;
-      console.log(reservas);
-    } catch (error) {
-      console.error("Erro ao listar reservas:", error);
-      throw error;
-    }
+
   }
 
-  // Função para cancelar uma reserva (usando PUT para alterar o status da reserva)
   async cancelarReserva(id: string): Promise<void> {
-    try {
-      const response = await fetch(`http://localhost:8000/reservas/${id}`, {
+
+      const response = await fetch(urlreserva + `/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ status: "cancelado" }), // Define o status como 'cancelado'
+        body: JSON.stringify({ status: "cancelado" }),
       });
 
       if (!response.ok) {
@@ -71,11 +65,36 @@ export class GestorReservas {
       }
       window.location.reload();
 
-      // Atualiza a lista de reservas após a operação de cancelamento
       this.listarReservas();
-    } catch (error) {
-      console.error("Erro ao cancelar reserva:", error);
-      throw error;
-    }
+
+  }
+
+  // Adicionar a função para inicializar visões e controladores
+  inicializar() {
+    import("../reserva/visao-criar-reserva").then(({ VisaoCriarReservas }) => {
+      import("../funcionario/funcionario-controller").then(
+        ({ ControladoraFuncionarios }) => {
+          import("../funcionario/visao-funcionario").then(
+            ({ VisaoFuncionarios }) => {
+              import("../mesa/mesa-controller").then(({ ControladoraMesas }) => {
+                import("../mesa/visao-mesa").then(({ VisaoMesas }) => {
+                  const visaoMesas = new VisaoMesas();
+                  const visaoFuncionarios = new VisaoFuncionarios();
+                  const controladoraMesas = new ControladoraMesas(visaoMesas);
+                  const controladoraFuncionarios = new ControladoraFuncionarios(
+                    visaoFuncionarios
+                  );
+                  const visaoCriarReservas = new VisaoCriarReservas(
+                    controladoraMesas,
+                    controladoraFuncionarios
+                  );
+                  visaoCriarReservas.iniciar();
+                });
+              });
+            }
+          );
+        }
+      );
+    });
   }
 }

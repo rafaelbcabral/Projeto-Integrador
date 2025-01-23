@@ -6,7 +6,7 @@ export class VisaoFuncionarios {
       "funcionario"
     ) as HTMLSelectElement;
     selectFuncionario.innerHTML =
-      '<option value="">Selecione o Funcionário</option>';
+      '<option value="">Selecione o Funcionário</option>'; // Limpa as opções antigas
 
     funcionarios.forEach((funcionario) => {
       const option = document.createElement("option");
@@ -16,3 +16,4 @@ export class VisaoFuncionarios {
     });
   }
 }
+

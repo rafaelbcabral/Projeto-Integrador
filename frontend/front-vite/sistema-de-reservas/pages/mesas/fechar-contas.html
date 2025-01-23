@@ -1,0 +1,51 @@
+<main class="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg">
+  <h1 class="text-3xl font-semibold text-center text-blue-600 mb-6">Fechar Conta</h1>
+
+  <!-- Seção de seleção de mesa -->
+  <div class="mb-6">
+    <label for="mesa" class="block text-lg font-medium text-blue-500">Selecione a Mesa:</label>
+    <select id="mesa" required></select>
+  </div>
+
+
+  <!-- Seção de itens consumidos -->
+  <div id="itensConsumidosContainer" class="mb-6">
+    <h2 class="text-xl font-semibold text-blue-500">Itens Consumidos:</h2>
+    <div id="itensConsumidos"></div>
+    <!-- Os itens serão carregados via JavaScript -->
+  </div>
+
+  <!-- Seção de forma de pagamento -->
+  <div class="mb-6">
+    <label for="formaPagamento" class="block text-lg font-medium text-blue-500">Forma de Pagamento:</label>
+    <select id="formaPagamento" name="formaPagamento" class="mt-2 p-3 w-full border border-blue-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+      <option value="dinheiro">Dinheiro</option>
+      <option value="pix">Pix</option>
+      <option value="debito">Cartão de Débito</option>
+      <option value="credito">Cartão de Crédito</option>
+    </select>
+  </div>
+
+  <!-- Seção de desconto -->
+  <div class="mb-6">
+    <label for="desconto" class="block text-lg font-medium text-blue-500">Aplicar Desconto (até 5%):</label>
+    <input type="number" id="desconto" name="desconto" min="0" max="5" step="1" class="mt-2 p-3 w-full border border-blue-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="0%">
+  </div>
+
+  <!-- Exibição dos totais -->
+  <div class="flex justify-between mb-6">
+    <div>
+      <p class="text-lg font-semibold text-blue-500">Total:</p>
+      <p id="total" class="text-xl font-bold text-blue-600" id="total" >#</p>
+    </div>
+    <div>
+      <p class="text-lg font-semibold text-blue-500">Total com Desconto:</p>
+      <p id="totalComDesconto" class="text-xl font-bold text-blue-600" id="totalComDesconto">#</p>
+    </div>
+  </div>
+
+  <!-- Botão para fechar a conta -->
+  <div class="flex justify-center">
+    <button id="fecharContaBtn" class="bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">Fechar Conta</button>
+  </div>
+</main>

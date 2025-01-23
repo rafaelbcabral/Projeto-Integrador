@@ -43,11 +43,14 @@ test('Testar a página de realizar reserva', async ({ page }) => {
   await expect(page.locator('#horarioInicial')).toHaveValue('11:00:00');
   console.log('Opção de horário selecionada');
 
+  await page.fill('#telefone', '988103858');
+  console.log('Campo #telefone preenchido');
   
   const mesaSelect = page.locator('#mesa');
   await mesaSelect.waitFor({ state: 'attached', timeout: 15000 });
   await expect(mesaSelect).toBeVisible();
   await expect(mesaSelect).toBeEnabled();
+
 
   await page.waitForFunction(() => {
     const selectElement = document.querySelector('#mesa') as HTMLSelectElement; 

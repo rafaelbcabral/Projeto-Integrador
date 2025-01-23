@@ -1,4 +1,6 @@
-import { Mesa } from "./mesa";
+import { url } from "../infra/url.ts";
+import { exibirErro } from "../infra/exibir-erro.ts";
+import { Mesa } from "./mesa.ts";
 
 export class GestorMesas {
   async consultarMesasDisponiveis(
@@ -7,15 +9,15 @@ export class GestorMesas {
   ): Promise<Mesa[]> {
     try {
       const response = await fetch(
-        `http://localhost:8000/mesas-disponiveis?data=${data}&horarioInicial=${horarioInicial}`
+        `${url}/mesas-disponiveis?data=${data}&horarioInicial=${horarioInicial}`
       );
       if (!response.ok) {
-        throw new Error("Erro ao consultar mesas disponíveis");
+        exibirErro('Erro ao consultar mesas disponíveis', response.status);
       }
       const mesas: Mesa[] = await response.json();
       return mesas;
     } catch (error) {
-      console.error("Erro ao consultar mesas:", error);
+      exibirErro('Erro ao consultar mesas: ', error);
       return [];
     }
   }

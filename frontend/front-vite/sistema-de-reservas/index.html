@@ -1,62 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + TS</title>
-    <script src="./src/reserva/index.ts" type="module" defer></script>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 20px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        background-color: #f0f0f0;
-      }
-      .menu {
-        background-color: white;
-        border-radius: 8px;
-        padding: 20px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      }
-      .menu h1 {
-        margin-top: 0;
-        color: #333;
-      }
-      .menu ul {
-        list-style-type: none;
-        padding: 0;
-      }
-      .menu li {
-        margin-bottom: 10px;
-      }
-      .menu a {
-        text-decoration: none;
-        color: #007bff;
-        font-weight: bold;
-        transition: color 0.3s ease;
-      }
-      .menu a:hover {
-        color: #0056b3;
-      }
-    </style>
-    <script src="/src/router/index.ts" type="module" defer></script>
-  </head>
-  <body>
-    <main>
-      <div class="menu">
-        <h1>Sistema de Reservas</h1>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+  <script src="/src/infra/toggle-menu.ts"></script>
+  <link rel="icon" href="/img/icon.png" />
+  <script type="module" src="./src/router/router.ts" defer></script>
+  <script type="module" src="/src/infra/verifyUrl.ts"></script>
+  <script type="module" src="/src/login/login.ts"></script>
+  <link rel="stylesheet" href="/src/main.css" />
+  <!-- <link rel="stylesheet" href="index.css"> -->
+
+
+</head>
+<body class="bg-gray-100 font-sans">
+  <div class="flex min-h-screen">
+    
+    <!-- Menu Lateral -->
+    <div id="sidebar" class="w-64 bg-gray-800 text-white p-4">
+      <a href="/home">
+        <h1 class="text-2xl font-bold mb-6">PlanAdmin</h1>
+      </a>
+      <nav>
         <ul>
-          <li><a href="/realizar-reserva">Cadastro de Reservas</a></li>
-          <li><a href="/listar-reservas">Listagem de Reservas</a></li>
-          <li><a href="/grafico">Gráfico de Reservas</a></li>
+          <!-- Home -->
+          <li class="mb-4">
+            <a href="/home" class="block py-2 px-4 bg-sky-950 rounded">Home</a>
+          </li>
+      
+          <!-- Reservas -->
+          <li class="mb-4">
+            <a href="" onclick="toggleSubMenu('reservasMenu')" class="flex items-center justify-between py-2 px-4 hover:bg-sky-950 rounded">
+              Reservas
+              <span class="ml-2 text-gray-400">↷</span>
+            </a>
+            <ul id="reservasMenu" class="hidden flex-col pl-4 space-y-2">
+              <li><a href="/fazer-reservas" class="block py-2 px-4 hover:bg-blue-500 rounded">Fazer Reservas</a></li>
+              <li><a href="/listar-reservas" class="block py-2 px-4 hover:bg-blue-500 rounded">Listar Reservas</a></li>
+            </ul>
+          </li>
+      
+          <!-- Relatórios -->
+          <li class="mb-4">
+            <a href="" onclick="toggleSubMenu('relatoriosMenu')" class="flex items-center justify-between py-2 px-4 hover:bg-sky-950 rounded">
+              Relatórios
+              <span class="ml-2 text-gray-400">↷</span>
+            </a>
+            <ul id="relatoriosMenu" class="hidden flex-col pl-4 space-y-2">
+              <li><a href="/grafico" class="block py-2 px-4 hover:bg-blue-500 rounded">Relatório p1 (tirar daqui e colocar apenas na home)</a></li>
+              <li><a href="/relatorio1" class="block py-2 px-4 hover:bg-blue-500 rounded">Relatório de vendas por período e forma de pagamento</a></li>
+              <li><a href="/relatorio2" class="block py-2 px-4 hover:bg-blue-500 rounded">Relatório de vendas por período e por funcionário</a></li>
+              <li><a href="/relatorio3" class="block py-2 px-4 hover:bg-blue-500 rounded">Relatório de vendas por categoria</a></li>
+              <li><a href="/relatorio4" class="block py-2 px-4 hover:bg-blue-500 rounded">Relatório de vendas por dia</a></li>
+            </ul>
+          </li>
+      
+          <!-- Mesas -->
+          <li class="mb-4">
+            <a href="" onclick="toggleSubMenu('mesasMenu')" class="flex items-center justify-between py-2 px-4 hover:bg-sky-950 rounded">
+              Mesas
+              <span class="ml-2 text-gray-400">↷</span>
+            </a>
+            <ul id="mesasMenu" class="hidden flex-col pl-4 space-y-2">
+              <li><a href="/consumo-mesas" class="block py-2 px-4 hover:bg-blue-500 rounded">Consumo de Mesas</a></li>
+              <li><a href="/fechar-contas" class="block py-2 px-4 hover:bg-blue-500 rounded">Fechar Conta da Mesa</a></li>
+            </ul>
+          </li>
         </ul>
-      </div>
-      <div id="content"></div>
-    </main>
-  </body>
+      </nav>
+    </div>
+    
+    <!-- Conteúdo Principal -->
+    <div id="content" class="flex-auto bg-white p-6">
+      <!-- Aqui o conteúdo será renderizado -->
+    </div>
+  </div>
+
+</body>
 </html>
