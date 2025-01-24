@@ -1,11 +1,10 @@
-import { url
-
- } from "../infra/url";
+import { url } from "../infra/url";
+import { showToast } from "../infra/toastify";
 async function carregarNomeFuncionario() {
   const nomeFuncionarioElement = document.getElementById("nomeFuncionario");
 
   if (!nomeFuncionarioElement) {
-    console.error("Elemento com o ID 'nomeFuncionario' não encontrado.");
+    showToast("Elemento com o ID 'nomeFuncionario' não encontrado.", "erro");
     return;
   }
 
@@ -13,7 +12,7 @@ async function carregarNomeFuncionario() {
     // Simulando chamada para uma API que retorna o nome do funcionário
     const response = await fetch(`${url}/funcionario`); // Altere para o endpoint real
     if (!response.ok) {
-      throw new Error("Erro ao carregar o nome do funcionário.");
+      showToast("Erro ao carregar o nome do funcionário.", "erro");
     }
 
     const data = await response.json();
@@ -22,7 +21,7 @@ async function carregarNomeFuncionario() {
     // Exibe o nome do funcionário no elemento
     nomeFuncionarioElement.textContent = nomeFuncionario;
   } catch (error) {
-    console.error("Erro ao carregar o nome do funcionário:", error);
+    showToast("Erro ao carregar o nome do funcionário:", "erro");
     nomeFuncionarioElement.textContent = "Erro ao carregar nome";
   }
 }

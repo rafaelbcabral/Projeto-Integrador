@@ -3,8 +3,8 @@
   <a href="/home" class="btn bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded">Menu Inicial</a>
   <a href="/listar-reservas" class="btn bg-green-700 hover:bg-green-600 text-white px-4 py-2 rounded">Ver Reservas</a>
 </div>
+
 <div class="form-reserva bg-white p-6 rounded-lg shadow-lg max-w-md mx-auto mt-10">
-  
     <h2 class="text-xl font-bold mb-4 text-center">Faça uma reserva!</h2>
     
     <form id="formReserva" class="space-y-4">
@@ -24,33 +24,35 @@
           class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-sky-800 focus:border-sky-800 sm:text-sm"
           required
         >
-        <option value="">Escolha a hora da Reserva</option>
-        <option value="11:00:00">11:00</option>
-        <option value="11:30:00">11:30</option>
-        <option value="12:00:00">12:00</option>
-        <option value="12:30:00">12:30</option>
-        <option value="13:00:00">13:00</option>
-        <option value="13:30:00">13:30</option>
-        <option value="14:00:00">14:00</option>
-        <option value="14:30:00">14:30</option>
-        <option value="15:00:00">15:00</option>
-        <option value="15:30:00">15:30</option>
-        <option value="16:00:00">16:00</option>
-        <option value="16:30:00">16:30</option>
-        <option value="17:00:00">17:00</option>
-        <option value="17:30:00">17:30</option>
-        <option value="18:00:00">18:00</option>
-        <option value="19:00:00">19:00</option>
-        <option value="20:00:00">20:00</option>
+          <option value="">Escolha a hora da Reserva</option>
+          <option value="11:00:00">11:00</option>
+          <option value="11:30:00">11:30</option>
+          <option value="12:00:00">12:00</option>
+          <option value="12:30:00">12:30</option>
+          <option value="13:00:00">13:00</option>
+          <option value="13:30:00">13:30</option>
+          <option value="14:00:00">14:00</option>
+          <option value="14:30:00">14:30</option>
+          <option value="15:00:00">15:00</option>
+          <option value="15:30:00">15:30</option>
+          <option value="16:00:00">16:00</option>
+          <option value="16:30:00">16:30</option>
+          <option value="17:00:00">17:00</option>
+          <option value="17:30:00">17:30</option>
+          <option value="18:00:00">18:00</option>
+          <option value="19:00:00">19:00</option>
+          <option value="20:00:00">20:00</option>
         </select>
       </div>
       <div class="form-group">
-        <label for="funcionario" class="block text-sm font-medium text-gray-700">Funcionário Responsável:</label>
+        <label for="funcionario" class="block text-sm font-medium text-gray-700">Funcionário Responsável (Opcional):</label>
         <select
           id="funcionario"
           class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-sky-800 focus:border-sky-800 sm:text-sm"
-          required
-        ></select>
+        >
+          <option value="">Nenhum (funcionário logado será utilizado)</option>
+          <!-- Outros funcionários podem ser adicionados aqui -->
+        </select>
       </div>
       <div class="form-group">
         <label for="mesa" class="block text-sm font-medium text-gray-700">Mesas:</label>
@@ -90,4 +92,4 @@
         </button>
       </div>
     </form>
-  </div>
+</div>

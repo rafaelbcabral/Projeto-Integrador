@@ -1,4 +1,5 @@
 import { Chart, CategoryScale, LinearScale, BarElement, BarController, Title, Tooltip, Legend } from 'chart.js';
+import { showToast } from '../infra/toastify';
 
 Chart.register(CategoryScale, LinearScale, BarElement, BarController, Title, Tooltip, Legend);
 
@@ -98,7 +99,7 @@ const obterDados = async (dataInicio: Date, dataFim: Date): Promise<void> => {
     const data: ReservaListar[] = await res.json(); // Espera pela conversão para JSON
 
     if (!Array.isArray(data)) { // Verificando se a resposta é um array de objetos
-      console.error("Formato de resposta incorreto. Esperado um array de objetos.");
+      showToast("Formato de resposta incorreto. Esperado um array de objetos.", "erro");
       return;
     }
 

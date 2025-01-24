@@ -1,7 +1,6 @@
 import { Reserva } from "./criar-reserva";
 import { GestorReservas } from "./gestor-reserva";
 import { VisaoCriarReservas } from "./visao-criar-reserva";
-import { exibirErro } from "../infra/exibir-erro";
 
 export class ControladoraReservas {
   private gestor: GestorReservas;
@@ -29,7 +28,7 @@ export class ControladoraReservas {
       // Envia o objeto para o gestor para criar a reserva
       await this.gestor.criarReserva(reserva);
     } catch (error) {
-      exibirErro('Erro ao criar reserva. ', error);
+      throw error;
     }
   }
 }

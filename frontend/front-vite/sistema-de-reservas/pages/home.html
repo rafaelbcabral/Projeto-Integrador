@@ -6,8 +6,7 @@
       <div class="flex items-center space-x-4" id="loginUsuario">
         <button 
           onclick="logout()" 
-          class="py-2 px-4 bg-red-800 text-white rounded-3xl hover:bg-white focus:outline-none hover:border-red-500 hover:border-2">
-          <a href="/login" class="hover:text-red-800">Sair</a>
+          class="py-2 px-4 bg-red-800 text-white rounded-3xl hover:bg-white focus:outline-none hover:border-red-500 hover:border-2">Sair
         </button>
       </div>
   </div>
@@ -66,20 +65,33 @@
   </div>
 
   <!-- Reservas por Período Section -->
-  <div class="bg-white p-6 rounded-lg shadow-lg">
-    <h3 class="text-xl font-semibold mb-4">Relatório da primeira parte do projeto.</h3>
-    <div class="grid grid-cols-3 gap-4 items-end">
-      <div>
-        <label for="start_date" class="block text-sm font-medium">Data Inicial</label>
-        <input type="date" id="start_date" class="w-full border border-gray-300 rounded px-4 py-2">
-      </div>
-      <div>
-        <label for="end_date" class="block text-sm font-medium">Data Final</label>
-        <input type="date" id="end_date" class="w-full border border-gray-300 rounded px-4 py-2">
-      </div>
-      <div>
-        <button class="bg-sky-800 text-white px-6 py-2 rounded">Gerar Relatório</button>
-      </div>
+<!-- Reservas por Período Section -->
+<div class="bg-white p-6 rounded-lg shadow-lg">
+  <form id="relatorioForm" class="space-y-4">
+    <h1 class="text-xl font-semibold = mb-6 text-left">Gerar relatório da p1</h1>
+    <div class="w-full h-px bg-gray-300 my-4"></div>
+
+    <div>
+      <label for="dataInicio" class="block text-lg">Data Inicial:</label>
+      <input type="date" id="dataInicio" name="dataInicio" class="mt-2 p-2 border rounded w-full" />
     </div>
+
+    <div>
+      <label for="dataFim" class="block text-lg">Data Final:</label>
+      <input type="date" id="dataFim" name="dataFim" class="mt-2 p-2 border rounded w-full" />
+    </div>
+
+    <!-- Botão de submissão -->
+    <div class="flex justify-end">
+      <button type="submit" class="bg-sky-800 hover:bg-sky-700 text-white px-6 py-2 rounded">Gerar Relatório</button>
+    </div>
+  </form>
+
+  <!-- Gráfico de Relatório -->
+  <div class="flex justify-center mt-6">
+    <canvas id="myChart" class="w-full max-w-[800px] h-[300px]"></canvas>
   </div>
+  
+</div>
+  
 </div>

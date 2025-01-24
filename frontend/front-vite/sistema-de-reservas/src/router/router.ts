@@ -6,6 +6,14 @@ import { ControladoraMesas } from '../mesa/mesa-controller.ts'
 import { checkLoginStatus } from '../login/login.ts';
 import { login } from '../login/login.ts';
 
+const currentPath = window.location.pathname;
+const sidebar = document.getElementById("sidebar");
+
+if (currentPath === '/login') {
+  if (sidebar) {
+    sidebar.style.display = 'none'; // Oculta a sidebar
+  }
+}
 
 
 export function mostrarHTML(html: string) {
@@ -34,12 +42,18 @@ page("/home", async () => {
   const html = await response.text();
   mostrarHTML(html);
 
-  const script = document.createElement('script');
-  script.type = 'module';
-  script.src = '/src/reserva/main-listar-reservas.ts'; // Para listar reservas
-  script.defer = true;
-  document.body.appendChild(script);
-  script.id
+  const script1 = document.createElement('script');
+  script1.type = 'module';
+  script1.src = '/src/reserva/main-listar-reservas.ts'; // Para listar reservas
+  script1.defer = true;
+  document.body.appendChild(script1);
+  script1.id
+
+  const script2 = document.createElement('script');
+  script2.type = 'module';
+  script2.src = '/src/grafico/grafico-reserva.ts'; // Carregar o script2 do gráfico
+  script2.defer = true;
+  document.body.appendChild(script2);
 });
 
 // Página de fazer reservas

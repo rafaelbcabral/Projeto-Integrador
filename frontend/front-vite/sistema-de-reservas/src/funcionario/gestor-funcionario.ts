@@ -11,8 +11,7 @@ export class GestorFuncionarios {
       const funcionarios: Funcionario[] = await response.json();
       return funcionarios;
     } catch (error) {
-      console.error("Erro ao listar funcionários:", error);
-      throw error;
+      throw new Error("Erro ao listar funcionários");
     }
   }
   

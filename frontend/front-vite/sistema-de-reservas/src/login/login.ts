@@ -1,18 +1,19 @@
 import { url } from "../infra/url";
+import { showToast } from "../infra/toastify";
+import { exibirErro } from "../infra/exibir-erro";
 
 (window as any).logout = logout;
 // Verificar se o usuário está logado
 export function checkLoginStatus() {
   const user_id = sessionStorage.getItem("user_id");
-  if(user_id === null){
-    alert('a')
-  }
+
   const currentPath = window.location.pathname;
 
   if (!user_id) {
     // Se não estiver logado, redireciona para login
     if (currentPath !== '/login') {
-      alert('Você precisa fazer o login!');
+      showToast('Você precisa fazer o login!', 'erro');
+
       window.location.href = "/login"; // Redireciona para login
     }
   } else {
@@ -35,7 +36,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 // Função de login
 
-ROTA DO LOGIN NO ROUTER
+// ROTA DO LOGIN NO ROUTER
 export async function login(event: Event) {
   event.preventDefault(); // Impede o recarregamento da página
 
@@ -45,7 +46,7 @@ export async function login(event: Event) {
 
   // Verificação dos campos
   if (!usuarioElement || !senhaElement) {
-    console.error("Os campos de usuário ou senha não foram encontrados no DOM.");
+    showToast("Os campos de usuário ou senha não foram encontrados no DOM.", "erro");
     return;
   }
 
@@ -54,7 +55,8 @@ export async function login(event: Event) {
 
   // Validação dos valores dos campos
   if (!usuario || !senha) {
-    alert("Preencha o usuário e a senha");
+    showToast('Preencha o usuário e a senha!', 'erro');
+
     return;
   }
 
@@ -70,29 +72,26 @@ export async function login(event: Event) {
 
     // Processar resposta do servidor
     const result = await response.json();
-    console.log("Resposta da API:", result); // Log da resposta da API para debug
 
     if (response.ok) {
       // Exibir mensagem de sucesso e armazenar user_id
-      alert(result.message);
+      showToast('Usuário logado!', 'sucesso');
+
       sessionStorage.setItem("user_id", result.user_id); // Guardar ID de usuário no sessionStorage
 
       // Verificar se o user_id foi armazenado corretamente
       const user_id = sessionStorage.getItem("user_id");
       if (!user_id) {
-        console.warn("user_id não encontrado no sessionStorage.");
-        alert("Ocorreu um erro ao recuperar o ID do usuário.");
+        showToast('Ocorreu um erro ao recuperar o ID do usuário.', 'erro');
+
       } else {
-        console.log("Login bem-sucedido. Atualizando a interface...");
         checkLoginStatus(); // Atualizar a interface com o status de login
       }
     } else {
-      console.error("Erro no login:", result.error);
-      alert(result.error); // Exibir mensagem de erro retornada pela API
+      exibirErro("Erro ao fazer login", result.error)
     }
   } catch (error) {
-    console.error("Erro no login:", error);
-    alert("Ocorreu um erro ao tentar fazer login. Tente novamente.");
+    exibirErro("Erro ao fazer login", error)
   }
 }
 
@@ -102,21 +101,28 @@ export async function login(event: Event) {
 
 // Logout
 export async function logout() {
-  const response = await fetch(`${url}/logout`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  try {
+    const response = await fetch(`${url}/logout`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
-  const result = await response.json();
+    // Se a resposta não for ok, lança um erro
+    if (!response.ok) {
+      const result = await response.json();
+      throw new Error(result.error || "Erro desconhecido ao fazer logout.");
+    }
 
-  if (response.ok) {
-    alert(result.message);
+    // Se a resposta for bem-sucedida, remova o item do sessionStorage e exiba uma mensagem
+    alert("Usuário deslogado!");
     sessionStorage.removeItem("user_id"); // Remover o ID de usuário do sessionStorage
-    checkLoginStatus();
-  } else {
-    alert(result.error);
+    checkLoginStatus(); // Verificar status de login após logout
+
+  } catch (error) {
+    // Se ocorrer algum erro no processo (seja ao chamar a API ou processar a resposta), exibe o erro
+    exibirErro("Erro ao fazer logout", error || "erro");
   }
 }
 

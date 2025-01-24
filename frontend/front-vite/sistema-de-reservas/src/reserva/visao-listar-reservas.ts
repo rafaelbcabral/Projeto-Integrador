@@ -1,5 +1,6 @@
 import { ReservaListar } from "./listar-reservas";
 import { ControladoraListarReservas } from "./reserva-controller-listar";
+import { exibirErro } from "../infra/exibir-erro";
 
 export class VisaoListarReservas {
   controladoraReserva: ControladoraListarReservas;
@@ -9,11 +10,14 @@ export class VisaoListarReservas {
   }
 
   iniciar() {
-    this.controladoraReserva.ListarReservas();
+    try {
+      this.controladoraReserva.ListarReservas();
+    } catch (error) {
+      exibirErro("Erro ao listar as reservas.", error);
+    }
   }
 
   desenharReservas(reservas: ReservaListar[]): void {
-    console.log(reservas);
     const tbody = document.querySelector("tbody") as HTMLElement;
     tbody.innerHTML = ""; // Limpa a tabela antes de adicionar novas linhas
 
@@ -31,7 +35,6 @@ export class VisaoListarReservas {
     tr.classList.add("border-b", "border-gray-200"); // Adicionando borda entre as linhas
 
     tr.append(
-      // this.criarCelula(reserva.id, "px-4", "py-2", "text-center"),
       this.criarCelula(reserva.nomeCliente, "px-4", "py-2"),
       this.criarCelula(reserva.mesa, "px-4", "py-2", "text-center"),
       this.criarCelula(reserva.data, "px-4", "py-2", "text-center"),
@@ -70,7 +73,11 @@ export class VisaoListarReservas {
     );
     botaoCancelar.onclick = () => {
       if (window.confirm("Tem certeza que deseja cancelar esta reserva?")) {
-        this.controladoraReserva.cancelarReserva(id);
+        try {
+          this.controladoraReserva.cancelarReserva(id);
+        } catch (error) {
+          exibirErro("Erro ao cancelar a reserva.", error);
+        }
       }
     }; // Adiciona a confirmação de cancelamento
     return botaoCancelar;

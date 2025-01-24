@@ -1,6 +1,5 @@
 import { GestorMesas } from "./gestor-mesas";
 import { VisaoMesas } from "./visao-mesa.ts";
-import { exibirErro } from '../infra/exibir-erro.ts';
 
 export class ControladoraMesas {
   private gestor: GestorMesas;
@@ -19,7 +18,7 @@ export class ControladoraMesas {
       const mesas = await this.gestor.consultarMesasDisponiveis(data, horarioInicial);
       this.visao.exibirMesas(mesas);
     } catch (error) {
-      exibirErro('Erro ao consultar mesas: ', error);
+      throw new Error('Não foi possível obter as mesas disponíveis. Tente novamente mais tarde.');
     }
   }
 }
