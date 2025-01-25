@@ -39,12 +39,10 @@ class ItemController
             $item = $this->itemRepo->listarItemPorCodigo($codigo);
             return $res->json($item);
         } catch (NaoEncontradoException $e) {
-            // Se a exceção for lançada, retorna uma resposta de erro com a mensagem da exceção
             $erro = [
-                'erro' => $e->getMessage() // Codificando explicitamente para UTF-8
+                'erro' => $e->getMessage()
             ];
 
-            // Retorna a resposta JSON com a mensagem de erro
             return $res->json($erro, 404);
         }
     }

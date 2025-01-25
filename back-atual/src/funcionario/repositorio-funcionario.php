@@ -33,18 +33,18 @@ class FuncionarioRepositorio
 
     public function findByUsername($username)
     {
-        $query = "SELECT * FROM usuarios WHERE username = :username";
+        $query = "SELECT * FROM funcionario WHERE username = :username";
         $stmt = $this->pdo->prepare($query);
         $stmt->execute(['username' => $username]);
         return $stmt->fetch(PDO::FETCH_OBJ);
     }
 
 
-    public function adicionarUsuario($nome, $usuario, $senhaComHash, $salt)
+    public function adicionarUsuario($nome, $usuario, $cargo, $senhaComHash, $salt)
     {
-        $query = "INSERT INTO funcionario (nome, usuario, senha, salt) VALUES (?, ?, ?, ?)";
+        $query = "INSERT INTO funcionario (nome, usuario, cargo, senha, salt) VALUES (?, ?, ?, ?, ?)";
         $stmt = $this->pdo->prepare($query);
 
-        $stmt->execute([$nome, $usuario, $senhaComHash, $salt]);
+        $stmt->execute([$nome, $usuario, $cargo, $senhaComHash, $salt]);
     }
 }

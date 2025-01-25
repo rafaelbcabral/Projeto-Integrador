@@ -19,13 +19,12 @@ class Consumo
      * @param integer $funcionario
      * @param float $valorTotalPorItem
      */
-    public function __construct(int $id, int $reserva, int $item, int $quantidade, int $funcionario, float $valorTotalPorItem)
+    public function __construct(int $id, int $reserva, int $item, int $quantidade, int $funcionario)
     {
         $this->id = $id;
         $this->reserva = $reserva;
         $this->item = $item;
         $this->quantidade = $quantidade;
         $this->funcionario = $funcionario;
-        $this->valorTotalPorItem =  $valorTotalPorItem;
     }
 }

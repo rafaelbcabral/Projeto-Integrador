@@ -49,16 +49,13 @@ class ServicoReserva
             }
         }
 
-        // Validar e salvar a reserva
         $problemas = $reserva->validar();
         if (count($problemas)) {
             throw (new DominioException())->setProblemas($problemas);
         }
 
-        // Salvar reserva no banco
         $this->reservaRepo->salvarReserva($reserva);
 
-        // Atualizar o status da mesa
         $this->mesaRepo->atualizarStatusMesa($dados['mesa'], false);
     }
 

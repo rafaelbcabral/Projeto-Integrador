@@ -4,6 +4,7 @@ CREATE TABLE IF NOT EXISTS funcionario (
     id INT NOT NULL AUTO_INCREMENT,
     nome VARCHAR(100) NOT NULL,
     usuario VARCHAR(100) NOT NULL UNIQUE,
+     cargo ENUM('gerente', 'atendente') NOT NULL,
     senha VARCHAR(255) NOT NULL,
     salt VARCHAR(255) NOT NULL,
     PRIMARY KEY (id)
@@ -52,7 +53,7 @@ CREATE TABLE IF NOT EXISTS consumo (
     item INT NOT NULL,             -- Identificador do item do cardápio consumido
     quantidade INT NOT NULL DEFAULT 1,         -- Quantidade consumida do item
     funcionario INT NOT NULL,               -- Identificador do funcionário que registrou o consumo
-    valotTotalPorItem decimal(10,2) NOT NULL, 
+    valorTotalPorItem decimal(10,2) NOT NULL, 
     FOREIGN KEY (reserva) REFERENCES reserva(id),  -- Relaciona com a tabela reserva
     FOREIGN KEY (item) REFERENCES item (id),  -- Relaciona com a tabela item_cardapio
     FOREIGN KEY (funcionario) REFERENCES funcionario(id)  -- Relaciona com a tabela de usuários

@@ -23,7 +23,7 @@ class ServicoFuncionario
         $senhaComHash = $this->hashSenha($data->senha, $salt);
 
         // Salvar usuário no banco de dados através do repositório
-        $this->funcionarioRepo->adicionarUsuario($data->nome, $data->usuario, $senhaComHash, $salt);
+        $this->funcionarioRepo->adicionarUsuario($data->nome, $data->usuario,  $data->cargo, $senhaComHash, $salt);
     }
 
     private function gerarSal(): string
