@@ -11,6 +11,7 @@ composer install
 
 composer dump-autoload
 
+ABRIR XAMPP 
 php -S localhost:8000
 
 
