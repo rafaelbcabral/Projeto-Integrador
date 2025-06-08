@@ -12,7 +12,7 @@ export class ControladoraReservas {
   }
 
   async criarReserva() {
-    const { nomeCliente, mesa, data, horarioInicial, funcionario, telefone } =
+    const { nomeCliente, mesa, data, inicio, funcionario, telefoneCliente } =
       this.visao.capturarDadosFormulario();
     try {
       // Cria o objeto de reserva
@@ -20,9 +20,9 @@ export class ControladoraReservas {
         nomeCliente,
         mesa,
         data,
-        horarioInicial,
+        inicio,
         funcionario,
-        telefone,
+        telefoneCliente,
       };
 
       // Envia o objeto para o gestor para criar a reserva

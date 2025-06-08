@@ -6,7 +6,7 @@ import { exibirErro } from "../infra/exibir-erro";
 // Verificar se o usuário está logado
 export function checkLoginStatus() {
   const user_id = sessionStorage.getItem("user_id");
-
+  console.log(user_id)
   const currentPath = window.location.pathname;
 
   if (!user_id) {
@@ -67,6 +67,7 @@ export async function login(event: Event) {
       headers: {
         "Content-Type": "application/json",
       },
+      // credentials: 'include',
       body: JSON.stringify({ usuario, senha }),
     });
 
@@ -107,6 +108,7 @@ export async function logout() {
       headers: {
         "Content-Type": "application/json",
       },
+      // credentials: 'include',
     });
 
     // Se a resposta não for ok, lança um erro

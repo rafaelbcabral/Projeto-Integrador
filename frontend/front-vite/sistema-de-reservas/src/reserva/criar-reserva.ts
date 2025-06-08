@@ -2,7 +2,7 @@ export interface Reserva {
   nomeCliente: string;
   mesa: number;
   data: string;
-  horarioInicial: string;
+  inicio: string;
   funcionario: number;
-  telefone: number;
+  telefoneCliente: number;
 }

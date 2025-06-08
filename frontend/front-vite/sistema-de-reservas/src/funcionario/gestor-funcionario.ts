@@ -4,7 +4,7 @@ import { url } from "../infra/url.ts";
 export class GestorFuncionarios {
   async listarFuncionarios(): Promise<Funcionario[]> {
     try {
-      const response = await fetch(`${url}/funcionarios`);
+      const response = await fetch(`${url}/funcionarios`, {credentials: 'include'});;
       if (!response.ok) {
         throw new Error("Erro ao consultar funcionários");
       }

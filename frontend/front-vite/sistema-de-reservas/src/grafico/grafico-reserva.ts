@@ -95,7 +95,7 @@ const obterDados = async (dataInicio: Date, dataFim: Date): Promise<void> => {
   const endpoint = `http://localhost:8000/periodo?dataInicial=${dataInicial}&dataFinal=${dataFinal}`; // Endpoint com parâmetros de data
 
   try {
-    const res = await fetch(endpoint);
+    const res = await fetch(endpoint, { credentials: 'include'});
     const data: ReservaListar[] = await res.json(); // Espera pela conversão para JSON
 
     if (!Array.isArray(data)) { // Verificando se a resposta é um array de objetos
@@ -113,35 +113,39 @@ const obterDados = async (dataInicio: Date, dataFim: Date): Promise<void> => {
 };
 
 
-const ctx = (document.getElementById('myChart') as HTMLCanvasElement).getContext('2d')!;
-
 let grafico1: Chart; // Variável para garantir que o gráfico seja atualizado
-
-const { primeiroDia, ultimoDia } = obterDatasMesAtual();
-
-grafico1 = criarGrafico(ctx, [], []); 
-
-obterDados(primeiroDia, ultimoDia); 
-
-
-const form = document.getElementById('relatorioForm');
-if (form) {
-  form.addEventListener('submit', (event) => {
-    event.preventDefault();
-
-    const dataInicioInput = (document.getElementById('dataInicio') as HTMLInputElement).value;
-    const dataInicio = new Date(`${dataInicioInput}T00:00:00`); // Força a hora correta
-
-    const dataFimInput = (document.getElementById('dataFim') as HTMLInputElement).value;
-    const dataFim = new Date(`${dataFimInput}T23:59:59`); // Força a hora correta
-
-    if (grafico1) { // Recria o gráfico ao mudar o intervalo
-      grafico1.destroy();
-    }
-
-    grafico1 = criarGrafico(ctx, [], []);
-    obterDados(dataInicio, dataFim); 
-  });
-} else {
-  console.error("Elemento 'relatorioForm' não encontrado.");
+export function iniciar() {
+  
+  const ctx = (document.getElementById('myChart') as HTMLCanvasElement).getContext('2d')!;
+  
+  
+  const { primeiroDia, ultimoDia } = obterDatasMesAtual();
+  
+  grafico1 = criarGrafico(ctx, [], []); 
+  
+  obterDados(primeiroDia, ultimoDia); 
+  
+  
+  const form = document.getElementById('relatorioForm');
+  if (form) {
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      
+      const dataInicioInput = (document.getElementById('dataInicio') as HTMLInputElement).value;
+      const dataInicio = new Date(`${dataInicioInput}T00:00:00`); // Força a hora correta
+      
+      const dataFimInput = (document.getElementById('dataFim') as HTMLInputElement).value;
+      const dataFim = new Date(`${dataFimInput}T23:59:59`); // Força a hora correta
+      
+      if (grafico1) { // Recria o gráfico ao mudar o intervalo
+        grafico1.destroy();
+      }
+      
+      grafico1 = criarGrafico(ctx, [], []);
+      obterDados(dataInicio, dataFim); 
+    });
+  } else {
+    console.error("Elemento 'relatorioForm' não encontrado.");
+  }
+  
 }

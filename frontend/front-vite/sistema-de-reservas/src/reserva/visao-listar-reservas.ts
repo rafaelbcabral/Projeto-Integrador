@@ -2,7 +2,7 @@ import { ReservaListar } from "./listar-reservas";
 import { ControladoraListarReservas } from "./reserva-controller-listar";
 import { exibirErro } from "../infra/exibir-erro";
 
-export class VisaoListarReservas {
+export default class VisaoListarReservas {
   controladoraReserva: ControladoraListarReservas;
 
   constructor() {

@@ -10,7 +10,7 @@ async function carregarNomeFuncionario() {
 
   try {
     // Simulando chamada para uma API que retorna o nome do funcionário
-    const response = await fetch(`${url}/funcionario`); // Altere para o endpoint real
+    const response = await fetch(`${url}/funcionario`, {credentials: 'include'}); // Altere para o endpoint real
     if (!response.ok) {
       showToast("Erro ao carregar o nome do funcionário.", "erro");
     }

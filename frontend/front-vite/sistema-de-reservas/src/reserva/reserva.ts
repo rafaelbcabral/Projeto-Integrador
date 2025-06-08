@@ -2,23 +2,23 @@ export class CriarReserva {
   nomeCliente: string;
   mesaId: number;
   data: string;
-  horarioInicial: string;
+  inicio: string;
   funcionarioId: number;
-  telefone: number;
+  telefoneCliente: number;
 
   constructor(
     nomeCliente: string,
     mesaId: number,
     data: string,
-    horarioInicial: string,
+    inicio: string,
     funcionarioId: number,
-    telefone: number,
+    telefoneCliente: number,
   ) {
     this.nomeCliente = nomeCliente;
     this.mesaId = mesaId;
     this.data = data;
-    this.horarioInicial = horarioInicial;
+    this.inicio = inicio;
     this.funcionarioId = funcionarioId;
-    this.telefone = telefone;
+    this.telefoneCliente = telefoneCliente;
   }
 }

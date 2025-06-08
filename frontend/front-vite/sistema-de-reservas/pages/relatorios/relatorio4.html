@@ -1,0 +1,26 @@
+<div class="bg-white p-6 rounded-lg shadow-lg">
+  <form id="relatorioForm" class="space-y-4">
+    <h1 class="text-xl font-semibold mb-6 text-left">Relatório de Vendas por Dia</h1>
+    <div class="w-full h-px bg-gray-300 my-4"></div>
+
+    <div>
+      <label for="dataInicio" class="block text-lg">Data Inicial:</label>
+      <input type="date" id="dataInicio" name="dataInicio" class="mt-2 p-2 border rounded w-full" />
+    </div>
+
+    <div>
+      <label for="dataFim" class="block text-lg">Data Final:</label>
+      <input type="date" id="dataFim" name="dataFim" class="mt-2 p-2 border rounded w-full" />
+    </div>
+
+    <!-- Botão de submissão -->
+    <div class="flex justify-end">
+      <button type="submit" class="bg-sky-800 hover:bg-sky-700 text-white px-6 py-2 rounded">Gerar Relatório</button>
+    </div>
+  </form>
+
+  <!-- Gráfico de Relatório -->
+  <div class="flex justify-center mt-6">
+    <canvas id="myBarChart" width="400" height="400"></canvas>
+  </div>
+</div>

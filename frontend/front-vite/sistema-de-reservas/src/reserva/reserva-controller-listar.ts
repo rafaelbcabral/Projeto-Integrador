@@ -1,5 +1,6 @@
 import { GestorReservas } from "./gestor-reserva";
 import { ReservaListar } from "./listar-reservas";
+// @ts-ignore
 import { VisaoListarReservas } from "./visao-listar-reservas";
 
 export class ControladoraListarReservas {

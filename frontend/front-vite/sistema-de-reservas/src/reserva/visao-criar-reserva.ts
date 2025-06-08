@@ -22,7 +22,7 @@ export class VisaoCriarReservas {
   iniciar() {
     this.controladoraFuncionario.listarFuncionarios();
     this.adicionarListenersParaDataEHorario();
-
+    
     const form = document.querySelector("form"); // Ensure this matches your form's selector
     if (!form) {
       showToast('Formulário não encontrado! ', 'erro');
@@ -72,8 +72,8 @@ export class VisaoCriarReservas {
         <p>Cliente: ${reserva.nomeCliente}</p>
         <p>Mesa: ${reserva.mesa}</p>
         <p>Data: ${reserva.data}</p>
-        <p>Hora: ${reserva.horarioInicial}</p>
-        <p>telefone: ${reserva.telefone}</p>
+        <p>Hora: ${reserva.inicio}</p>
+        <p>telefone: ${reserva.telefoneCliente}</p>
       `;
     }
   }
@@ -84,13 +84,13 @@ export class VisaoCriarReservas {
       .value;
     const mesaId = (document.getElementById("mesa") as HTMLSelectElement).value;
     const data = (document.getElementById("data") as HTMLInputElement).value;
-    const horarioInicial = (
+    const inicio = (
       document.getElementById("horarioInicial") as HTMLSelectElement
     ).value;
     const funcionarioId = (
       document.getElementById("funcionario") as HTMLSelectElement
     ).value;
-    const telefone = (
+    const telefoneCliente = (
       document.getElementById("telefone") as HTMLSelectElement
     ).value;
 
@@ -98,9 +98,9 @@ export class VisaoCriarReservas {
       nomeCliente,
       mesa: Number(mesaId),
       data,
-      horarioInicial,
+      inicio,
       funcionario: Number(funcionarioId),
-      telefone: Number(telefone)
+      telefoneCliente: Number(telefoneCliente)
     };
   }
 }

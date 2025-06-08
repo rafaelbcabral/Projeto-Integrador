@@ -1,4 +1,4 @@
-# Projeto Integrador - P1
+# Projeto Integrador - P2
 ## Alunos: Rafael Botelho Cabral e Ramon Souza da Silva
 
 ### 📋 Descrição do Projeto

@@ -8,7 +8,7 @@ export class GestorMesas {
   ): Promise<Mesa[]> {
     try {
       const response = await fetch(
-        `${url}/mesas-disponiveis?data=${data}&horarioInicial=${horarioInicial}`
+        `${url}/mesas-disponiveis?data=${data}&horarioInicial=${horarioInicial}`, {credentials: 'include'}
       );
 
       if (!response.ok) {

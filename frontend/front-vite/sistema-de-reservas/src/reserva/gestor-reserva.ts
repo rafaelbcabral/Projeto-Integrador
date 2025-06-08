@@ -12,15 +12,19 @@ export class GestorReservas {
     if (!funcionarioId) {
       throw new Error("Funcionário não está logado.");
     }
-
+    
     // Associa o ID do funcionário à reserva
     reserva.funcionario = Number(funcionarioId);
-
+    if (reserva.inicio.length === 5) {
+      reserva.inicio += ":00"; // Adiciona segundos se necessário
+    }
+    console.log(reserva);
     const response = await fetch(urlreserva, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
+      // credentials: 'include',
       body: JSON.stringify(reserva),
     });
 
@@ -41,6 +45,7 @@ export class GestorReservas {
         headers: {
           "Content-Type": "application/json",
         },
+        // credentials: 'include'
       });
 
       if (!response.ok) {
@@ -60,6 +65,7 @@ export class GestorReservas {
         headers: {
           "Content-Type": "application/json",
         },
+        // credentials: 'include',
         body: JSON.stringify({ status: "cancelado" }),
       });
 
